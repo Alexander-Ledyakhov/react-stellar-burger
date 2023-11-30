@@ -1,0 +1,8 @@
+.constructorItems {
+  max-height: 656px;
+  width: 600px;
+  display: grid;
+  row-gap: 16px;
+  list-style: none;
+  box-sizing: border-box;
+}

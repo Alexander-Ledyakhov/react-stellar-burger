@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  min-height: 88px;
+  margin-top: 40px;
+  background-color: #1c1c21;
+}
+
+.logo {
+  position: absolute;
+  margin-top: -25px;
+  margin-left: -145px;
+  left: 50%;
+  top: 50%;
+}
+
+.header_list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  display: flex;
+}
+
+.header_link {
+  text-decoration: none;
+  color: var(--text-primary-color);
+  display: flex;
+  justify-items: center;
+}

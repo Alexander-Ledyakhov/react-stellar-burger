@@ -5,6 +5,12 @@
   background-color: #1c1c21;
 }
 
+.header__shell {
+  min-width: 1280px;
+  margin: auto;
+  position: relative;
+}
+
 .logo {
   position: absolute;
   margin-top: -25px;
@@ -13,14 +19,18 @@
   top: 50%;
 }
 
-.header_list {
+.header__list_main {
+  justify-content: space-between;
+}
+
+.header__list {
   list-style-type: none;
   margin: 0;
   padding-left: 0;
   display: flex;
 }
 
-.header_link {
+.header__link {
   text-decoration: none;
   color: var(--text-primary-color);
   display: flex;

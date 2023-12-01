@@ -1,7 +1,7 @@
-import styles from "./burger-ingredients.module.css";
+import styles from "./burgerIngredients.module.css";
 import { data } from "../../utils/data";
 import BurgerIngredient from "../burgerIngredient/BurgerIngredient"
-import PropTypes from "prop-types";
+import { ingredientsArrPropType } from "../../utils/prop-types";
 
 function BurgerIngredients() {
 
@@ -22,34 +22,20 @@ function BurgerIngredients() {
     
     return (
         <>
-            <div className='custom-scroll custom-scroll-margin' 
-                style={{maxHeight: '756px',overflowY: 'scroll'}}>
+            <div className={`${styles.items} custom-scroll custom-scroll-margin`} >
                 <h2 className="text text_type_main-medium">Булки</h2>
-                <div className={styles.items}>{bun}</div>
+                <div className={styles.items__ingredients}>{bun}</div>
                 <h2 className="text text_type_main-medium">Соусы</h2>
-                <div className={styles.items}>{sauce}</div>
+                <div className={styles.items__ingredients}>{sauce}</div>
                 <h2 className="text text_type_main-medium">Начинки</h2>
-                <div className={styles.items}>{main}</div>                
+                <div className={styles.items__ingredients}>{main}</div>                
             </div>
         </>
     )
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired
-    }),
-};
+    data: ingredientsArrPropType.isRequired
+}
 
 export default BurgerIngredients;

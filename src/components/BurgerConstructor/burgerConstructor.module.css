@@ -1,8 +1,42 @@
-.constructorItems {
+.constructor {
+  max-width: 600px;
+  max-height: 696px;
+  position: relative;
+}
+
+.constructor__items_main {
   max-height: 656px;
   width: 600px;
   display: grid;
   row-gap: 16px;
   list-style: none;
   box-sizing: border-box;
+}
+
+.constructor__items {
+  max-height: 464px; 
+  overflow-y: scroll; 
+  display: grid; 
+  row-gap: 16px; 
+  padding: 0px;
+}
+
+.constructor__item {
+  width: 568px;
+  display: flex;
+  align-items: center;
+}
+
+.constructor__ingredient {
+  width: 536px;
+}
+
+.constructor__summarizing {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.constructor__price {
+  display: flex;
+  align-items: center;
 }

@@ -1,0 +1,17 @@
+.items {
+  max-height: 756px;
+  overflow-y: scroll;
+}
+
+.items__ingredients {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-around;
+  row-gap: 32px;
+  column-gap: 24px;
+  margin: 24px 0px 40px;
+}
+
+.items__ingredients:last-child {
+  margin-bottom: 0px;
+}

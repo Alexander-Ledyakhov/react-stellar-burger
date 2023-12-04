@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  min-height: 88px;
+  margin-top: 40px;
+  background-color: #1c1c21;
+}
+
+.header__shell {
+  min-width: 1280px;
+  margin: auto;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  margin-top: -25px;
+  margin-left: -145px;
+  left: 50%;
+  top: 50%;
+}
+
+.header__list_main {
+  justify-content: space-between;
+}
+
+.header__list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  display: flex;
+}
+
+.header__link {
+  text-decoration: none;
+  color: var(--text-primary-color);
+  display: flex;
+  justify-items: center;
+}

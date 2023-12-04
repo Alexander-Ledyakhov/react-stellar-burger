@@ -1,0 +1,19 @@
+.ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 272px;
+    min-height: 208px;
+}
+
+.ingredient__price {
+    display: grid;
+    grid-auto-flow: column; 
+    align-items: center;
+    gap: 9px;
+}
+
+.ingredient__name {
+    text-align: center;
+}

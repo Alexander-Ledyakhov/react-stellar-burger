@@ -1,21 +1,21 @@
 import styles from "./burgerIngredients.module.css";
-import { data } from "../../utils/data";
 import BurgerIngredient from "../burgerIngredient/BurgerIngredient"
 import { ingredientsArrPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
-function BurgerIngredients() {
-
+function BurgerIngredients(props) {
+    
     const bun = [];
     const sauce = [];
     const main = [];
-    
-    data.forEach((item) => {
+
+    props.data.forEach((item) => {
         if(item.type === 'bun')
-            bun.push(<BurgerIngredient item={item} key={item._id}/>)
+            bun.push(<BurgerIngredient data={item} key={item._id} setOpen={props.setOpen} modal={props.modal} />)
         else if(item.type === 'sauce')
-            sauce.push(<BurgerIngredient item={item} key={item._id}/>)
+            sauce.push(<BurgerIngredient data={item} key={item._id} setOpen={props.setOpen} modal={props.modal} />)
         else if(item.type === 'main')
-            main.push(<BurgerIngredient item={item} key={item._id}/>)
+            main.push(<BurgerIngredient data={item} key={item._id} setOpen={props.setOpen} modal={props.modal} />)
         else
             console.log(`Какая-то новая категория - ${item.type}`)
     })
@@ -25,8 +25,10 @@ function BurgerIngredients() {
             <div className={`${styles.items} custom-scroll custom-scroll-margin`} >
                 <h2 className="text text_type_main-medium">Булки</h2>
                 <div className={styles.items__ingredients}>{bun}</div>
+
                 <h2 className="text text_type_main-medium">Соусы</h2>
                 <div className={styles.items__ingredients}>{sauce}</div>
+
                 <h2 className="text text_type_main-medium">Начинки</h2>
                 <div className={styles.items__ingredients}>{main}</div>                
             </div>
@@ -35,7 +37,9 @@ function BurgerIngredients() {
 }
 
 BurgerIngredients.propTypes = {
-    data: ingredientsArrPropType.isRequired
+    data: ingredientsArrPropType.isRequired,
+    setOpen: PropTypes.func.isRequired,
+    modal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

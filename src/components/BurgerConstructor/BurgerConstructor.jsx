@@ -1,13 +1,13 @@
 import styles from "./burgerConstructor.module.css"
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { data } from "../../utils/data";
 import { ingredientsArrPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
-function BurgerConstructor() {
+function BurgerConstructor(props) {
 
         const buns = [];
 
-        data.forEach((item) => {
+        props.data.forEach((item) => {
             if(item.type === 'bun')
                 buns.push(item)
         })
@@ -27,7 +27,7 @@ function BurgerConstructor() {
                 </li>
 
                 <ul className={`${styles.constructor__items} custom-scroll`} >
-                    {data.map(itemData => (
+                    {props.data.map(itemData => (
                         <li key={itemData._id} className={styles.constructor__item} >
                             <DragIcon type="primary"/>
                             <div className={`${styles.constructor__ingredient} ml-2`}>
@@ -55,7 +55,15 @@ function BurgerConstructor() {
                     <p className="text text_type_digits-medium mr-2">610</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+
+                <Button htmlType="button" type="primary" size="large"
+                    onClick={() => {
+                        props.setOpen(true);
+                        
+                        props.modal('order', '');
+                    }}>
+                        Оформить заказ
+                </Button>
             </div>
 
         </section>
@@ -63,7 +71,9 @@ function BurgerConstructor() {
 }
 
 BurgerConstructor.propTypes = {
-    data: ingredientsArrPropType.isRequired
+    data: ingredientsArrPropType.isRequired,
+    setOpen: PropTypes.func.isRequired,
+    modal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

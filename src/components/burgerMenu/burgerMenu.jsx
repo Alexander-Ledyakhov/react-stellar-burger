@@ -2,8 +2,11 @@ import BurgerIngredients from "../burgerIngredients/BurgerIngredients"
 import { useState } from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from "./burgerMenu.module.css";
+ 
+import { ingredientsArrPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
-function BurgerMenu() {
+function BurgerMenu(props) {
 
     const [category, setCategory] = useState('Bun')
 
@@ -15,9 +18,15 @@ function BurgerMenu() {
                 <Tab value='sauce' active={category === 'sauce'} onClick={setCategory}>Соусы</Tab>
                 <Tab value='main' active={category === 'main'} onClick={setCategory}>Начинки</Tab>
             </div>
-            <BurgerIngredients />
+            <BurgerIngredients data={props.data} setOpen={props.setOpen} modal={props.modal} />
         </section>
     )
+}
+
+BurgerMenu.propTypes = {
+    data: ingredientsArrPropType.isRequired,
+    setOpen: PropTypes.func.isRequired,
+    modal: PropTypes.func.isRequired
 }
 
 export default BurgerMenu;

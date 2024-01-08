@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const ingredientObjectPropType = PropTypes.shape({
+export const ingredientObjectPropType = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -16,3 +16,9 @@ const ingredientObjectPropType = PropTypes.shape({
 });
 
 export const ingredientsArrPropType = PropTypes.arrayOf(ingredientObjectPropType.isRequired)
+
+export const modalDataItem = PropTypes.shape({
+  item : PropTypes.object.isRequired,
+  title : PropTypes.string.isRequired,
+  type : PropTypes.string.isRequired
+});

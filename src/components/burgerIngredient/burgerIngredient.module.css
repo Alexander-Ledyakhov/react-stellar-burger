@@ -5,6 +5,7 @@
     position: relative;
     width: 272px;
     min-height: 208px;
+    cursor: pointer;
 }
 
 .ingredient__price {

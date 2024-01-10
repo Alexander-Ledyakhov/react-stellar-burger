@@ -3,31 +3,45 @@ import { useEffect } from "react";
 import { CloseIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 
-import { modalDataItem } from "../../utils/prop-types";
 import PropTypes from "prop-types";
- 
-function Modal({children, dataItem, ...props}) {
+
+import { useSelector, useDispatch } from 'react-redux';
+import { MODAL_CLOSE } from '../../services/actions/modal';
+import { useCallback } from 'react';
+
+
+function Modal({ children }) {
+
+    const { visible, title } = useSelector(state => state.modalReducer);
+    const dispatch = useDispatch();
+
+    const closeModal = useCallback(() => {
+        dispatch({
+            type: MODAL_CLOSE
+        })
+    }, [dispatch])
 
     useEffect(() => {
         const handleEscClose = (evt) => {
-            (evt.key === "Escape") && props.setOpen(false);
+            (evt.key === "Escape") && closeModal();
         }
         document.addEventListener("keydown", handleEscClose);
         return () => document.removeEventListener("keydown", handleEscClose)
-    }, [props]);
+    }, [closeModal]);
 
+    
     return (
-        <div className={`${props.setOpen && styles.popup_opened} ${styles.popup}`}>
-            <ModalOverlay setOpen={props.setOpen} />
+        <div className={`${visible && styles.popup_opened} ${styles.popup}`}>
+            <ModalOverlay closeModal={closeModal} />
             <div className={`${styles.popup__container}`}>
                 <div className={`${styles.popup__header}`}>
-                    <h2 className="text text_type_main-large">{dataItem.title}</h2>
+                    <h2 className="text text_type_main-large">{title}</h2>
                     <Button 
                         htmlType="button" 
                         type="secondary" 
                         size="small" 
                         extraClass={`${styles.popup__btn}`} 
-                        onClick={() => props.setOpen(false)} >
+                        onClick={() => closeModal()} >
                         <CloseIcon type="primary" />
                     </Button>
                 </div>
@@ -38,8 +52,6 @@ function Modal({children, dataItem, ...props}) {
 }
 
 Modal.propTypes = {
-    dataItem: modalDataItem.isRequired,
-    setOpen: PropTypes.func.isRequired,
     children: PropTypes.array.isRequired
 }
 

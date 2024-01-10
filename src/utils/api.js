@@ -8,8 +8,16 @@ function resOk(res) {
     }
 }
 
-function getIngredientsApi() {
+export function getIngredientsApi() {
     return fetch(`${baseUrl}/ingredients`).then(res => resOk(res));
 }
 
-export default getIngredientsApi;
+export function postOrderDetailsApi(ingredientsID) {
+  return fetch(`${baseUrl}/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ingredients: ingredientsID
+    })
+  }).then(res => resOk(res));
+}

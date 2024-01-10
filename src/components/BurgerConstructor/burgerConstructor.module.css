@@ -19,6 +19,7 @@
   display: grid; 
   row-gap: 16px; 
   padding: 0px;
+  overflow: auto;
 }
 
 .constructor__item {
@@ -40,3 +41,16 @@
   display: flex;
   align-items: center;
 }
+
+
+
+.constructor__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 80px;
+  background-color: #2f2f37;
+  border-radius: 40px;
+}
+

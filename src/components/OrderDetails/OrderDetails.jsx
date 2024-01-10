@@ -3,13 +3,15 @@ import img1 from '../../images/Vector1.png'
 import img2 from '../../images/Vector2.png'
 import img3 from '../../images/Vector3.png'
 import checkMarkIcon from '../../images/checkMarkIcon.png'
-
+import { useSelector } from 'react-redux';
 
 function OrderDetails() {
 
+    const orderNumber = useSelector(state => state.orderDetailsReducer.orderNumber);
+
     return (
         <div className={`${styles.orderDetails__content} mt-4 mb-30`}>
-            <h3 className={`text text_type_digits-large`}>034536</h3>
+            <h3 className={`text text_type_digits-large`}>{orderNumber}</h3>
             <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
             <div className={`${styles.orderDetails__icons} mt-15`}>
                 <img src={img1} alt="" className={`${styles.orderDetails__icon1}`} />

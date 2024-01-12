@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 function IngredientDetails() {
 
 
-    const { item } = useSelector(state => state.modalReducer);
+    const item = useSelector(state => state.modalReducer.item);
 
 
     return (

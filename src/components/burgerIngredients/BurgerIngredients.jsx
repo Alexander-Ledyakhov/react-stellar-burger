@@ -6,19 +6,14 @@ function BurgerIngredients() {
 
     const ingredients = useSelector(state => state.ingredientsReducer.allIngredients); 
     
-    const bun = [];
-    const sauce = [];
-    const main = [];
+    const cattegories = {
+        'bun': [],
+        'sauce': [],
+        'main': []
+    }
 
     ingredients.forEach((item) => {
-        if(item.type === 'bun')
-            bun.push(<BurgerIngredient data={item} key={item._id} />)
-        else if(item.type === 'sauce')
-            sauce.push(<BurgerIngredient data={item} key={item._id} />)
-        else if(item.type === 'main')
-            main.push(<BurgerIngredient data={item} key={item._id} />)
-        else
-            console.log(`Какая-то новая категория - ${item.type}`)
+        cattegories[item.type].push(<BurgerIngredient itemContent={item} key={item._id} />)
     })
     
     return (
@@ -27,17 +22,17 @@ function BurgerIngredients() {
 
                 <div id="categoryMenu">
                     <h2 className="text text_type_main-medium">Булки</h2>
-                    <div className={styles.items__ingredients}>{bun}</div>
+                    <div className={styles.items__ingredients}>{cattegories.bun}</div>
                 </div>
 
                 <div id="categoryMenu">
                     <h2 className="text text_type_main-medium">Соусы</h2>
-                    <div className={styles.items__ingredients}>{sauce}</div>
+                    <div className={styles.items__ingredients}>{cattegories.sauce}</div>
                 </div>
 
                 <div id="categoryMenu">
                     <h2 className="text text_type_main-medium">Начинки</h2>
-                    <div className={`${styles.items__ingredients} ${styles.items__ingredientsLast}`}>{main}</div>  
+                    <div className={`${styles.items__ingredients} ${styles.items__ingredientsLast}`}>{cattegories.main}</div>  
                 </div>              
             </div>
         </>

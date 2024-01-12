@@ -12,31 +12,31 @@ import { MODAL_OPEN } from '../../services/actions/modal';
 
 
 
-function BurgerIngredient({data}) {
+function BurgerIngredient({itemContent}) {
 
     const { ingredients, bun } = useSelector(state => state.constructorIngredientsReducer);
     
     const [, dragRef] = useDrag({
         type: 'itemData',
-        item: {data}
+        item: {itemContent}
     });
 
 
     const count = useMemo(() => {
         const countIngredients = ingredients.filter(
-                (item) => item.item._id === data._id,
+                (item) => item.item._id === itemContent._id,
             )
 
         let countBun = 0
         if (bun) {
-            if (bun.item._id === data._id) {
+            if (bun.item._id === itemContent._id) {
                 countBun = 2
                 return countBun
             }
         }
 
         return countIngredients.length + countBun;
-    }, [ingredients, bun, data]);
+    }, [ingredients, bun, itemContent]);
 
 
     const dispatch = useDispatch();
@@ -47,33 +47,31 @@ function BurgerIngredient({data}) {
             type: MODAL_OPEN,
             payload: { type, title, info },
         })
-      }
+    }
+
+
 
     return (
         <div className={styles.ingredient}  
-            onClick={(evt) => {
-               const itemId = evt.currentTarget.getAttribute('id');
-               (data._id === itemId) && openModal('ingredient', 'Детали ингредиента', data);
-            }} 
-            id={data._id} 
+            onClick={() => openModal('ingredient', 'Детали ингредиента', itemContent)}
             draggable
             ref={dragRef}
         > 
             <Counter count={count} size="default" extraClass="m-1" />
-            <img src={data.image} alt={`картинка ${data.name}`} />
+            <img src={itemContent.image} alt={`картинка ${itemContent.name}`} />
             <div className={`${styles.ingredient__price} mt-2 mb-2`} >
-                <p className='text text_type_digits-default'>{data.price}</p>
+                <p className='text text_type_digits-default'>{itemContent.price}</p>
                 <CurrencyIcon type="primary"/>
             </div>
             <p className={`${styles.ingredient__name} text text_type_main-default`}>
-                {data.name}
+                {itemContent.name}
             </p>
         </div>
     )
 }
 
 BurgerIngredient.propTypes = {
-    data: PropTypes.shape(ingredientObjectPropType.isRequired).isRequired
+    itemContent: PropTypes.shape(ingredientObjectPropType.isRequired).isRequired
 }
 
 export default BurgerIngredient;

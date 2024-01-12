@@ -23,7 +23,7 @@ function BurgerConstructor() {
     });
 
     function onDropHandler(ingredient) {
-        const item = ingredient.data;
+        const item = ingredient.itemContent;
         if (item.type === 'bun') dispatch({ type: ADD_BUN, payload: {item, key: key()} });
             else dispatch({ type: ADD_INGREDIENT, payload: {item, key: key()} });
     }    
@@ -72,11 +72,11 @@ function BurgerConstructor() {
                 ref={dropTarget}>
                     {
                         empty &&
-                        <div className={styles.constructor__empty}>
+                        <li className={styles.constructor__empty}>
                             <p className="text text_type_main-default text_color_inactive">
                                 Перетащи сюда ингредиенты
                             </p>
-                        </div>
+                        </li>
                     }
                     {
                         bun && <li className='ml-8'>

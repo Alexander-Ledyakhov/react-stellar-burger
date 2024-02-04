@@ -3,8 +3,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import AppHeader from "../appHeader/AppHeader";
 import styles from "./app.module.css";
 
-import getIngredientsApi from '../../utils/api'
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 
 import Modal from '../Modal/Modal'
@@ -13,59 +12,47 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
 
 
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+import { getIngredients } from '../../services/actions/allIngredients';
+import { useSelector, useDispatch } from 'react-redux';
+
+
+
 function App() {
-    
-    const [data, setData] = useState({success: false, data: []})
+
+
+    const dispatch = useDispatch();
+    const ingredients = useSelector(state => state.ingredientsReducer);
+    const { visible, type } = useSelector(state => state.modalReducer);
+  
     useEffect(() => {
-        getIngredientsApi().then(json => setData({success: json.success, data: json.data})).catch((err) => console.log(err));
-    }, [])
+      dispatch(getIngredients());    
+    }, [dispatch]) 
 
-
-    const [open, setOpen] = useState(false);
-
-    const [dataItem, setDataItem] = useState({type: '', item: {}, title: ''});
-    const modalIngredientDetails = ( type, item, title) => {
-        setDataItem({
-            type: type,
-            item: item, 
-            title: title
-        })
-    }
-
-    const modalOrderDetails = (type, title) => {
-        setDataItem({
-            type: type,
-            item: {}, 
-            title: title
-        })
-    }
-
-    
-
-    
     return (
         <>
             <AppHeader />
             <main className={styles.main}>
-                {(data.success) && (
+                {(ingredients.isSuccess) && (
                     <> 
-                        { open  && (
-                            <Modal setOpen={setOpen} dataItem={dataItem}>
-                                {(dataItem.type === 'ingredient') && <IngredientDetails data={dataItem.item}/>}
-                                {(dataItem.type === 'order') && <OrderDetails />}
+                        { visible  && (
+                            <Modal>
+                                {(type === 'ingredient') && <IngredientDetails />}
+                                {(type === 'order') && <OrderDetails />}
                             </Modal>
                         )}
-                        <BurgerMenu data={data.data} setOpen={setOpen} modal={modalIngredientDetails} /> 
-                        <BurgerConstructor data={data.data} setOpen={setOpen} modal={modalOrderDetails} />
+                        <DndProvider backend={HTML5Backend}>
+                            <BurgerMenu /> 
+                            <BurgerConstructor />
+                        </DndProvider>
                     </>
                 )}
             </main>
         </>
     )
 }
-
-
-
-
 
 export default App;

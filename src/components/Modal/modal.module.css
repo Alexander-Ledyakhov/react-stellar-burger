@@ -17,18 +17,11 @@
 }
 
 
-
-
-
-/**/
-
-
-
-
 .popup__container {
     box-sizing: border-box;
     background: #1C1C21;
     width: 720px;
+    min-height: 144px;
     border: 1px solid rgba(76, 76, 255, .2);
     border-radius: 40px;
     position: fixed;

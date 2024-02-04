@@ -1,0 +1,10 @@
+.constructor__item {
+    width: 568px;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}
+  
+.constructor__ingredient {
+    width: 536px;
+}

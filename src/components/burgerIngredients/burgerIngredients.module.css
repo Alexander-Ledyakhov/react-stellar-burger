@@ -9,9 +9,9 @@
   justify-content: space-around;
   row-gap: 32px;
   column-gap: 24px;
-  margin: 24px 0px 40px;
+  padding: 24px 0px 40px;
 }
 
-.items__ingredients:last-child {
-  margin-bottom: 0px;
+.items__ingredientsLast {
+  padding-bottom: 0px;
 }

@@ -7,10 +7,7 @@ import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { useDispatch } from 'react-redux';
 import { MODAL_OPEN } from '../../services/actions/modal';
-
-
-
-
+import { Link } from 'react-router-dom';
 
 function BurgerIngredient({itemContent}) {
 
@@ -42,31 +39,32 @@ function BurgerIngredient({itemContent}) {
     const dispatch = useDispatch();
 
 
-    const openModal = (type, title, info) => {
+    const openModalItem = () => {
+        const type = 'ingredient'
+        const title = 'Детали ингредиента'
+        
         dispatch({
             type: MODAL_OPEN,
-            payload: { type, title, info },
+            payload: { type, title }
         })
     }
 
 
 
     return (
-        <div className={styles.ingredient}  
-            onClick={() => openModal('ingredient', 'Детали ингредиента', itemContent)}
-            draggable
-            ref={dragRef}
-        > 
-            <Counter count={count} size="default" extraClass="m-1" />
-            <img src={itemContent.image} alt={`картинка ${itemContent.name}`} />
-            <div className={`${styles.ingredient__price} mt-2 mb-2`} >
-                <p className='text text_type_digits-default'>{itemContent.price}</p>
-                <CurrencyIcon type="primary"/>
+        <Link to={`/ingredients/${itemContent._id}`} className={styles.ingredient__link} onClick={openModalItem}>
+            <div className={styles.ingredient} draggable ref={dragRef}> 
+                <Counter count={count} size="default" extraClass="m-1" />
+                <img src={itemContent.image} alt={`картинка ${itemContent.name}`} />
+                <div className={`${styles.ingredient__price} mt-2 mb-2`} >
+                    <p className='text text_type_digits-default'>{itemContent.price}</p>
+                    <CurrencyIcon type="primary"/>
+                </div>
+                <p className={`${styles.ingredient__name} text text_type_main-default`}>
+                    {itemContent.name}
+                </p>
             </div>
-            <p className={`${styles.ingredient__name} text text_type_main-default`}>
-                {itemContent.name}
-            </p>
-        </div>
+        </Link>
     )
 }
 

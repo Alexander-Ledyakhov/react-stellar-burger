@@ -4,11 +4,11 @@ export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_ERROR = 'POST_ORDER_ERROR';
 
-export function postOrderDetails(ingredientsID) {
+export function postOrderDetails(ingredientsID, token) {
     return (dispatch) => {
         dispatch({type: POST_ORDER_REQUEST})
         
-        postOrderDetailsApi(ingredientsID)
+        postOrderDetailsApi(ingredientsID, token)
           .then((json) => {
             dispatch({
               type: POST_ORDER_SUCCESS, 

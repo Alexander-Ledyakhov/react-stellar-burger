@@ -5,15 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/constructorIngredients';
 import { v4 as key } from 'uuid';
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { MODAL_OPEN } from '../../services/actions/modal';
 import { postOrderDetails } from "../../services/actions/orderDetails";
+import { useNavigate } from 'react-router-dom';
+
+import { postTokenAuth } from "../../services/actions/token";
+import { postLogoutAuth } from "../../services/actions/logout";
 
 function BurgerConstructor() {
  
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { ingredients, bun, empty } = useSelector(state => state.constructorIngredientsReducer);
 
+
+
+    const { ingredients, bun, empty } = useSelector(state => state.constructorIngredientsReducer);
+    const tokenError = useSelector(state => state.tokenReducer.error)
+    const tokenSuccess = useSelector(state => state.tokenReducer.success)
+    const logoutSuccess = useSelector(state => state.logoutReducer.success)
 
     const [, dropTarget] = useDrop({
         accept: "itemData",
@@ -47,10 +57,28 @@ function BurgerConstructor() {
         })
     }
 
+
+    useEffect(() => {
+        if ((!logoutSuccess) && localStorage.getItem('refreshToken')) {
+            if (!tokenSuccess) {
+                dispatch(postTokenAuth(localStorage.getItem('refreshToken')))
+            } else if (tokenError) {
+                dispatch(postLogoutAuth(localStorage.getItem('refreshToken')))
+            }
+        }
+    }, [dispatch, tokenError, logoutSuccess, tokenSuccess])
+      
+
+
     const submitOrder = () => {
+        if (!localStorage.getItem('refreshToken')) {
+            localStorage.setItem('path', '/')
+            navigate('/login', {replace: true})
+        }
+
         if (ingredientsID().length > 0) {
             openModal('order')
-            dispatch(postOrderDetails(ingredientsID()))
+            dispatch(postOrderDetails(ingredientsID(), localStorage.getItem('accessToken')))
         } else {
             openModal('error', 'Корзина пуста')
         }
@@ -121,11 +149,12 @@ function BurgerConstructor() {
                 </div>
 
                 <Button 
-                    htmlType="button" 
+                    htmlType="button"
                     type="primary" 
                     size="large"
-                    onClick={() => submitOrder()}>
-                        Оформить заказ
+                    onClick={() => submitOrder()}
+                >
+                    Оформить заказ
                 </Button>
             </div>
 

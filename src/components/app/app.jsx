@@ -1,56 +1,54 @@
-import BurgerMenu from "../burgerMenu/burgerMenu";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import AppHeader from "../appHeader/AppHeader";
-import styles from "./app.module.css";
-
+import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 
-
-import Modal from '../Modal/Modal'
-
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import AppHeader from "../appHeader/AppHeader";
+import { ProtectedRouteElement } from '../ProtectedRouteElement';
 import OrderDetails from '../OrderDetails/OrderDetails'
+import Modal from '../Modal/Modal'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
-
-
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
+import ConstructorPage from '../../page/constructor/pageConstructor'
+import LodinPage from '../../page/login/pageLogin'
+import Register from '../../page/register/pageRegister'
+import ForgotPasswordPage from '../../page/forgotPassword/pageForgotPassword'
+import ResetPasswordPage from '../../page/resetPassword/pageResetPassword'
+import ProfilePage from '../../page/profile/pageProfile'
 import { getIngredients } from '../../services/actions/allIngredients';
-import { useSelector, useDispatch } from 'react-redux';
-
-
 
 function App() {
 
-
     const dispatch = useDispatch();
-    const ingredients = useSelector(state => state.ingredientsReducer);
     const { visible, type } = useSelector(state => state.modalReducer);
-  
+
     useEffect(() => {
-      dispatch(getIngredients());    
-    }, [dispatch]) 
+        dispatch(getIngredients());
+    }, [dispatch])
 
     return (
         <>
             <AppHeader />
-            <main className={styles.main}>
-                {(ingredients.isSuccess) && (
-                    <> 
-                        { visible  && (
-                            <Modal>
-                                {(type === 'ingredient') && <IngredientDetails />}
-                                {(type === 'order') && <OrderDetails />}
-                            </Modal>
-                        )}
-                        <DndProvider backend={HTML5Backend}>
-                            <BurgerMenu /> 
-                            <BurgerConstructor />
-                        </DndProvider>
-                    </>
-                )}
-            </main>
+                <Routes>
+                    <Route exact path="/" element={<ConstructorPage />}>
+                        {(visible) &&
+                                <Route path='/ingredients/:id' element={
+                                        <Modal>
+                                            {(type === 'ingredient') && <IngredientDetails />}
+                                            {(type === 'order') && <OrderDetails />}
+                                        </Modal>
+                                } />
+                        }
+                    </Route>
+                    <Route path="/login" element={<ProtectedRouteElement element={<LodinPage />} />} />
+                    <Route path="/register" element={<ProtectedRouteElement element={<Register />} />} />
+                    <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
+                    <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
+                    <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+                </Routes>
+                {(!visible) &&
+                    <Routes>
+                        <Route path='/ingredients/:ingredientId' element={<IngredientDetails />} />
+                    </Routes>}
         </>
     )
 }

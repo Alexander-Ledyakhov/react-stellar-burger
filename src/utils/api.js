@@ -1,6 +1,6 @@
 const baseUrl = 'https://norma.nomoreparties.space/api'
 
-function resOk(res) {
+function checkStatusRes(res) {
     if (res.ok) {
       return res.json();
     } else {
@@ -9,7 +9,7 @@ function resOk(res) {
 }
 
 export function getIngredientsApi() {
-    return fetch(`${baseUrl}/ingredients`).then(res => resOk(res));
+    return fetch(`${baseUrl}/ingredients`).then(res => checkStatusRes(res));
 }
 
 export function postOrderDetailsApi(ingredientsID, token) {
@@ -22,7 +22,7 @@ export function postOrderDetailsApi(ingredientsID, token) {
     body: JSON.stringify({
       ingredients: ingredientsID
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 
@@ -37,7 +37,7 @@ export function checkEmailApi(email) {
     body: JSON.stringify({
       email: email
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 export function resetPasswordApi(password, codePassword) {
@@ -48,7 +48,7 @@ export function resetPasswordApi(password, codePassword) {
       password: password,
       token: codePassword
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 
@@ -74,7 +74,7 @@ export function postRegisterApi(email, password, name) {
       password: password,
       name: name
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 export function postAuthApi(email, password) {
@@ -85,7 +85,7 @@ export function postAuthApi(email, password) {
       email: email,
       password: password
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 export function postTokenApi(token) {
@@ -95,7 +95,7 @@ export function postTokenApi(token) {
     body: JSON.stringify({
       token: token
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 export function postLogoutApi(token) {
@@ -105,7 +105,7 @@ export function postLogoutApi(token) {
     body: JSON.stringify({
       token: token
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 
@@ -122,7 +122,7 @@ export function getInfoUserApi(token) {
       authorization: token,
       "Content-Type": "application/json" 
     }
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }
 
 
@@ -138,5 +138,5 @@ export function patchInfoUserApi(token, email, password, name) {
       password: password,
       name: name
     })
-  }).then(res => resOk(res));
+  }).then(res => checkStatusRes(res));
 }

@@ -63,7 +63,7 @@ function ProfilePage() {
     }
 
 
-    const isCancel = (evt) => {
+    const onCancel = (evt) => {
       evt.preventDefault();
       getInfoUserApi(localStorage.getItem('accessToken')).then((json) => {
         setEmail(json.user.email)
@@ -72,7 +72,7 @@ function ProfilePage() {
       setChange(false)
     }
 
-    const isExit = () => {
+    const onExit = () => {
       dispatch(postLogoutAuth(localStorage.getItem('refreshToken')))
     };
 
@@ -121,7 +121,7 @@ function ProfilePage() {
                     <li className={style.profile_li}>
                         <NavLink
                           className={`${style.profile__link} text text_type_main-medium text_color_inactive`}
-                          onClick={isExit}
+                          onClick={onExit}
                         >
                           {textExit}
                         </NavLink>
@@ -175,7 +175,7 @@ function ProfilePage() {
                           htmlType="button"
                           type="secondary"
                           size="large"
-                          onClick={(evt) => isCancel(evt)}
+                          onClick={(evt) => onCancel(evt)}
                         >
                           Отмена
                         </Button>

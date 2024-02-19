@@ -19,7 +19,7 @@ function BurgerIngredient({itemContent}) {
     });
 
 
-    const count = useMemo(() => {
+    const getCount = useMemo(() => {
         const countIngredients = ingredients.filter(
                 (item) => item.item._id === itemContent._id,
             )
@@ -54,7 +54,7 @@ function BurgerIngredient({itemContent}) {
     return (
         <Link to={`/ingredients/${itemContent._id}`} className={styles.ingredient__link} onClick={openModalItem}>
             <div className={styles.ingredient} draggable ref={dragRef}> 
-                <Counter count={count} size="default" extraClass="m-1" />
+                <Counter count={getCount} size="default" extraClass="m-1" />
                 <img src={itemContent.image} alt={`картинка ${itemContent.name}`} />
                 <div className={`${styles.ingredient__price} mt-2 mb-2`} >
                     <p className='text text_type_digits-default'>{itemContent.price}</p>

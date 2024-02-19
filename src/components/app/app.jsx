@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 import AppHeader from "../appHeader/AppHeader";
 import { ProtectedRouteElement } from '../ProtectedRouteElement';
@@ -15,24 +15,34 @@ import ForgotPasswordPage from '../../page/forgotPassword/pageForgotPassword'
 import ResetPasswordPage from '../../page/resetPassword/pageResetPassword'
 import ProfilePage from '../../page/profile/pageProfile'
 import { getIngredients } from '../../services/actions/allIngredients';
+import { MODAL_CLOSE } from '../../services/actions/modal';
+
 
 function App() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { visible, type } = useSelector(state => state.modalReducer);
 
     useEffect(() => {
         dispatch(getIngredients());
     }, [dispatch])
 
+    const onClose = useCallback(() => {
+        dispatch({
+            type: MODAL_CLOSE
+        })
+        navigate('/', {replace: true})
+    }, [dispatch, navigate])
+
     return (
         <>
             <AppHeader />
                 <Routes>
-                    <Route exact path="/" element={<ConstructorPage />}>
+                    <Route exact path="/" element={<ConstructorPage onClose={onClose} />}>
                         {(visible) &&
                                 <Route path='/ingredients/:id' element={
-                                        <Modal>
+                                        <Modal onClose={onClose} >
                                             {(type === 'ingredient') && <IngredientDetails />}
                                             {(type === 'order') && <OrderDetails />}
                                         </Modal>

@@ -76,15 +76,15 @@ function BurgerConstructor() {
             navigate('/login', {replace: true})
         }
 
-        if (ingredientsID().length > 0) {
+        if (getingredientsID().length > 0) {
             openModal('order')
-            dispatch(postOrderDetails(ingredientsID(), localStorage.getItem('accessToken')))
+            dispatch(postOrderDetails(getingredientsID(), localStorage.getItem('accessToken')))
         } else {
             openModal('error', 'Корзина пуста')
         }
     };
 
-    function ingredientsID(){
+    function getingredientsID(){
         const ingredientsID = ingredients.map((ingredient) => ingredient.item._id);
         if (bun) {
             ingredientsID.push(bun.item._id, bun.item._id)

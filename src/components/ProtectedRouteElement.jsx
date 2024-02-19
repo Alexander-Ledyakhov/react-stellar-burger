@@ -2,23 +2,23 @@ import { Navigate } from 'react-router-dom';
 
 export function ProtectedRouteElement({ element}) {
 
-    const notAuthorized = () => {
+    const returnFotNotAuthorized = () => {
         return localStorage.getItem('refreshToken') ? element : <Navigate to="/login" replace/>;
     }
 
-    const authorized = () => {
+    const returnFotAuthorized = () => {
         return localStorage.getItem('refreshToken') ? <Navigate to="/" replace/> : element;
     }
 
     if (element.type.name == 'ProfilePage') {
         localStorage.setItem('path', '/profile')
-        return notAuthorized();
+        return returnFotNotAuthorized();
     } else if (element.type.name == 'LodinPage') {
-        return authorized();
+        return returnFotAuthorized();
     } else if (element.type.name == 'Register') {
-        return authorized();
+        return returnFotAuthorized();
     } else if (element.type.name == 'ForgotPasswordPage') {
-        return authorized();
+        return returnFotAuthorized();
     } else if (element.type.name == 'ResetPasswordPage') {
         return (!localStorage.getItem('emailForgotPassword')) ? <Navigate to="/" replace/> : element;
     } else {

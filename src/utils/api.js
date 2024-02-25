@@ -140,3 +140,11 @@ export function patchInfoUserApi(token, email, password, name) {
     })
   }).then(res => checkStatusRes(res));
 }
+
+
+
+//GET https://norma.nomoreparties.space/api/orders/{номер заказа} 
+
+export function getOrderApi(numberId) {
+  return fetch(`${baseUrl}/orders/${numberId}`).then(res => checkStatusRes(res));
+}

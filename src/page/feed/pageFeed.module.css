@@ -1,0 +1,36 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1240px;
+    margin: auto;
+}
+
+.main_title {
+    min-width: 1240px;
+}
+
+.feed {
+    max-height: 845px;
+    overflow-y: scroll; 
+    width: 612px; 
+}
+
+.summary_statuses {
+    display: flex;
+    gap: 36px;
+}
+
+.summary_status {
+    width: 272px;
+}
+
+.summary_done {
+    color: #00CCCC;
+}
+
+.summary_list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}

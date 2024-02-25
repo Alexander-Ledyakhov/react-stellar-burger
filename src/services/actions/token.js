@@ -18,7 +18,8 @@ export function postTokenAuth(token) {
           .catch((err) => {
             console.log(err)
             dispatch({
-              type: POST_TOKEN_ERROR,
+              type: POST_TOKEN_ERROR, 
+              payload: err
             })
           })
       }

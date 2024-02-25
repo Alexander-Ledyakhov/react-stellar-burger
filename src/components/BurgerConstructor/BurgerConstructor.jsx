@@ -5,26 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/constructorIngredients';
 import { v4 as key } from 'uuid';
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { MODAL_OPEN } from '../../services/actions/modal';
 import { postOrderDetails } from "../../services/actions/orderDetails";
 import { useNavigate } from 'react-router-dom';
 
-import { postTokenAuth } from "../../services/actions/token";
-import { postLogoutAuth } from "../../services/actions/logout";
 
 function BurgerConstructor() {
  
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-
-
     const { ingredients, bun, empty } = useSelector(state => state.constructorIngredientsReducer);
-    const tokenError = useSelector(state => state.tokenReducer.error)
-    const tokenSuccess = useSelector(state => state.tokenReducer.success)
-    const logoutSuccess = useSelector(state => state.logoutReducer.success)
-
     const [, dropTarget] = useDrop({
         accept: "itemData",
         drop(ingredient) {
@@ -38,8 +29,6 @@ function BurgerConstructor() {
             else dispatch({ type: ADD_INGREDIENT, payload: {item, key: key()} });
     }    
 
-
-
     const price = useMemo(() => {
         const itemPrice = ingredients ? ingredients.reduce((sum, ingredient) => {
             return sum = sum + ingredient.item.price
@@ -48,27 +37,12 @@ function BurgerConstructor() {
         return itemPrice + bunPrice;
     }, [ingredients, bun]);
 
-
-
     const openModal = (type, title) => {
         dispatch({
             type: MODAL_OPEN,
             payload: { type, title },
         })
     }
-
-
-    useEffect(() => {
-        if ((!logoutSuccess) && localStorage.getItem('refreshToken')) {
-            if (!tokenSuccess) {
-                dispatch(postTokenAuth(localStorage.getItem('refreshToken')))
-            } else if (tokenError) {
-                dispatch(postLogoutAuth(localStorage.getItem('refreshToken')))
-            }
-        }
-    }, [dispatch, tokenError, logoutSuccess, tokenSuccess])
-      
-
 
     const submitOrder = () => {
         if (!localStorage.getItem('refreshToken')) {

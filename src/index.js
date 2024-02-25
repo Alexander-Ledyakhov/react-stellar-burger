@@ -7,20 +7,15 @@ import { Provider } from 'react-redux';
 import { rootReducer } from "./services/reducers/rootReducer";
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-
-
-
-
-
-
 import { BrowserRouter } from 'react-router-dom'
+import { socketMiddleware } from './services/middleware'
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware("wss://norma.nomoreparties.space/orders")));
 const store = createStore(rootReducer, enhancer); 
 
 ReactDOM.render(

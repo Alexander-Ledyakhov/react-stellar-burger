@@ -16,7 +16,7 @@ function AppHeader() {
                 </a>
               </li>
               <li className='pl-5 pr-5 pt-4 pb-4'>
-                <a href="/#" className={styles.header__link}>
+                <a href="/feed" className={styles.header__link}>
                   <ListIcon type="secondary" />
                   <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
                 </a>

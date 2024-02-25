@@ -1,11 +1,8 @@
 import styles from "./modal.module.css";
-
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
-
 import { CloseIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 
 function Modal({ onClose, children }) {
@@ -18,7 +15,7 @@ function Modal({ onClose, children }) {
         }
         document.addEventListener("keydown", handleEscClose);
         return () => document.removeEventListener("keydown", handleEscClose)
-    }, []);
+    }, [onClose]);
 
     return (
         <>
@@ -43,10 +40,9 @@ function Modal({ onClose, children }) {
     )
 }
 
-
 Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    children: PropTypes.array.isRequired
+    children: PropTypes.object.isRequired
 }
 
 export default Modal;

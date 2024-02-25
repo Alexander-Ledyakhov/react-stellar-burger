@@ -1,40 +1,13 @@
 import styles from "./ingredientDetails.module.css"
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { useLocation } from 'react-router-dom';
-import { MODAL_OPEN } from '../../services/actions/modal';
-
-
 function IngredientDetails() {
-    const dispatch = useDispatch();
-    const {pathname} = useLocation()
-
-    const regex = /\/ingredients\/[a-z+1-9+0]{1,}/
-
     const { visible } = useSelector(state => state.modalReducer);
-
-
-
-    if (localStorage.getItem('modalOpen')) {
-        if (pathname.match(regex).length > 0) {
-            if (!visible) {
-                const type = 'ingredient'
-                const title = 'Детали ингредиента'
-                
-                dispatch({
-                    type: MODAL_OPEN,
-                    payload: { type, title }
-                })
-            }
-        }
-    }
-
     const [item, setItem] = useState('')
     const [itemId, setItemId] = useState('')
     const { ingredientId, id } = useParams();
-
     const {allIngredients, isSuccess} = useSelector(state => state.ingredientsReducer);
 
     useEffect(() => {

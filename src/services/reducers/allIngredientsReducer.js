@@ -23,8 +23,8 @@ export const ingredientsReducer = ( state = initialState, action ) => {
         case GET_INGREDIENTS_SUCCESS:
             return {
                 ...state,
-                allIngredients: action.payload, 
-                isSuccess: true,
+                allIngredients: action.payload.data, 
+                isSuccess: action.payload.success,
                 isRequest: false,
                 isError: false
             }

@@ -34,3 +34,7 @@
     display: grid;
     row-gap: 8px;
 }
+
+.ingredientDetails__notModal {
+    margin-top: 120px;
+}

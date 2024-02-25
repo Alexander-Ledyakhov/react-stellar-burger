@@ -18,3 +18,8 @@
 .ingredient__name {
     text-align: center;
 }
+
+.ingredient__link {
+    text-decoration: none;
+    color: #F2F2F3;
+}

@@ -23,7 +23,7 @@ function AppHeader() {
               </li> 
             </ul>
             <li className='pl-5 pr-5 pt-4 pb-4'>
-              <a href="/#" className={styles.header__link}>
+              <a href="/profile" className={styles.header__link}>
                 <ProfileIcon type="secondary" />
                 <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
               </a>

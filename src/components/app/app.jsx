@@ -22,32 +22,24 @@ import { MODAL_CLOSE } from '../../services/actions/modal';
 
 import {FeedPage} from '../../page/feed/pageFeed'
 import {FeedDetails} from '../FeedDetails/FeedDetails'
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/ws";
 
 function App() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { visible, type } = useSelector(state => state.modalReducer);
-    const ordersWS = useSelector(store => store.wsReducer.messages.orders)
     const location = useLocation();
     const pathname = location.state && location.state.pathname;
+
     const onClose = useCallback(() => {
         dispatch({
             type: MODAL_CLOSE
         })
         if (!pathname) {   
             navigate('/', {replace: true})
-        } else {
-            navigate(-1)
+        } else if (pathname) {
+            navigate(`${pathname.pathname}`, {replace: true})
         }
     }, [dispatch, navigate])
-    
-    useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START });
-        return () => {
-            dispatch({ type: WS_CONNECTION_CLOSED });
-        }
-    }, [dispatch])
 
     useEffect(() => {
         dispatch(getIngredients());
@@ -98,15 +90,15 @@ function App() {
                         <Route path='/ingredients/:ingredientId' element={<IngredientDetails />} />
                     </Routes>}
 
-                {!visible && ordersWS && (
+                {!visible && (
                     <Routes>
                         <Route path='/feed/:numberId' element={<FeedDetails />} />
                     </Routes>
                 )}
 
-                {!visible && ordersWS && (
+                {!visible && (
                     <Routes>
-                        <Route path="/profile/orders/:numberId" element={<FeedDetails />} />
+                        <Route path="/profile/orders/:numberId" element={<ProtectedRouteElement element={<FeedDetails />} />} />
                     </Routes>
                     
                 )}

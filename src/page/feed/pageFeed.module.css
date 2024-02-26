@@ -33,4 +33,6 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    max-height: 383px;
+    overflow-y: scroll; 
 }

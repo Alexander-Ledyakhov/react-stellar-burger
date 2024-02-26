@@ -4,53 +4,76 @@ import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as key } from 'uuid';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/ws";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_START_USER } from "../../services/actions/ws";
 import IconFeed from '../IconFeed/IconFeed'
 import { getOrderApi } from "../../utils/api";
 
-export function FeedDetails() {
 
-    const ordersWS = useSelector(store => store.wsReducer.messages.orders)
-    const errorWS = useSelector(store => store.wsReducer.messages.error)
-    const [order, setOrder] = useState('')
-    const { numberId } = useParams();
-    const dispatch = useDispatch()
-    const items = useSelector(state => state.ingredientsReducer.allIngredients);
-    const ingredientsID = order.ingredients
+
+import { useLocation } from 'react-router-dom';
+
+
+
+export function FeedDetails() {
+    const {pathname} = useLocation()
+    const path = pathname.split("/")[1]
     const { visible } = useSelector(state => state.modalReducer);
-    
-    (errorWS !== 'undefined') && getOrderApi(numberId, localStorage.getItem('accessToken')
-        .slice(7)).then((json) => {
-            if (json.success) {
-                if (json.orders.length > 0) {
-                    setOrder(json.orders);
-                }
-            }
-        })
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START });
-        return () => {
-            dispatch({ type: WS_CONNECTION_CLOSED });
+        if (path == 'feed' && !visible) {
+            dispatch({ type: WS_CONNECTION_START });
+            return () => {
+                dispatch({ type: WS_CONNECTION_CLOSED });
+            }
+        } else if (path == 'profile' && !visible) {
+            dispatch({ type: WS_CONNECTION_START_USER });
+            return () => {
+              dispatch({ type: WS_CONNECTION_CLOSED });
+            }
         }
     }, [dispatch])
+    
+    const ordersWS = useSelector(store => store.wsReducer.messages.orders)
+    const [order, setOrder] = useState(null)
+    const { numberId } = useParams();
+    
+    const items = useSelector(state => state.ingredientsReducer.allIngredients);
+    const [ingredientsIds, setIngredientsIds] = useState('')
+
+    useEffect(() => {
+        if (order) {
+            setIngredientsIds(order.ingredients)
+        }
+    }, [order])
+
+    useEffect(() => {
+        if (ordersWS) {
+            if ( numberId in ordersWS ) {
+                getOrderApi(numberId).then((json) => {
+                    if (json.success) {
+                        setOrder(json.orders);
+                    }
+                })
+            }
+        }
+    }, [ordersWS, numberId])
 
     useEffect(() => {
         if (numberId && ordersWS) {
             setOrder(ordersWS.find(orderWS => {
                 return orderWS._id === numberId
-            }));            
+            })); 
         }
-    }, [ordersWS, numberId])
+    }, [dispatch, ordersWS, numberId])
 
     const ingredientsItems = useMemo(() => {
-        if (ingredientsID) {
-            const ingredientsItems = ingredientsID.map((ingredientID) => {
+        if (ingredientsIds) {
+            return ingredientsIds.map((ingredientID) => {
                 return items.find(item => item._id === ingredientID);
             })
-            return ingredientsItems
         }
-    }, [ingredientsID])
+    }, [ingredientsIds])
 
     const prise = useMemo(() => {
         let sum = 0
@@ -123,7 +146,7 @@ export function FeedDetails() {
                                 {ingredientsUniqueItems.map((ingredient) => (
                                     <li  style={{ marginRight }} key={key()} className={`${styles.feedDetails__ingredient}`} >
                                         <div className={styles.feedDetails_description}>
-                                            <IconFeed ingredients={ingredient} key={key()}/>
+                                            <IconFeed image={ingredient.image} name={ingredient.name} key={key()}/>
                                             <p className="ml-4 text text_type_main-default">{ingredient.name}</p>
                                         </div>
                                         <div className={styles.feedDetails_description}>

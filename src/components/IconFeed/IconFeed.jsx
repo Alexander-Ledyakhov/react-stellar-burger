@@ -1,11 +1,11 @@
 import styles from './iconFeed.module.css';
 
-const IconFeed = ({ingredients}) => {
+const IconFeed = ({image, name}) => {
 
     return (
         <div className={styles.iconFeed_imgBorder}>
             <div className={styles.iconFeed_imgBackground}>
-                <img className={styles.iconFeed_img} src={ingredients.image} alt={`иконка ингридиента "${ingredients.name}"`}/>
+                <img className={styles.iconFeed_img} src={image} alt={`иконка ингридиента "${name}"`}/>
             </div>
         </div>
     )

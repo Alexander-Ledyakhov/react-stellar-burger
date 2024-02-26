@@ -20,9 +20,11 @@ const OrderCard = ({order, link}) => {
 
     const prise = useMemo(() => {
         let sum = 0
-        ingredientsItems.forEach(ingredientItem => {
-            sum += ingredientItem.price
-        });
+        if (ingredientsItems) {
+            ingredientsItems.forEach(ingredientItem => {
+                sum += ingredientItem.price
+            });
+        }
         return sum
     }, [ingredientsItems])
 
@@ -56,7 +58,7 @@ const OrderCard = ({order, link}) => {
                     <p className='text text_type_main-default mt-2' style={{ display, color }}>
                         {(order.status == 'done') && 'Выполнен'}
                         {(order.status == 'pending') && 'Готовится'}
-                        {(order.status == 'created') && 'Создан'}
+                        {( (order.status == '') || (order.status == 'created') || ((order.status !== 'done') && (order.status !== 'pending'))) && 'Создан'}
                     </p>
                     <div className={`${styles.order_components} mt-6`}>
                         <div className={styles.order_ingredients}>

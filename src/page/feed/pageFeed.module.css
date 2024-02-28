@@ -31,7 +31,7 @@
 
 .summary_list {
     min-height: 152px;
-    max-height: 661px;
+    max-height: 666px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;

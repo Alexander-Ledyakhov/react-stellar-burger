@@ -1,15 +1,11 @@
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import style from './pageForgotPassword.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react";
 import { checkEmailApi } from "../../utils/api";
-import { useNavigate } from 'react-router-dom';
-
 
 function ForgotPasswordPage() {
-
     const navigate = useNavigate();
-    
     const [forgotPassword, setForgotPassword] = useState('')
 
     const submitEmail = (evt) => {

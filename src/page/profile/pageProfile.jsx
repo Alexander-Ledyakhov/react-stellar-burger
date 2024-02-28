@@ -1,6 +1,6 @@
 import style from './pageProfile.module.css'
 
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,7 +10,6 @@ import { postTokenAuth } from "../../services/actions/token";
 
 import Modal from '../../components/Modal/Modal'
 import {FeedDetails} from '../../components/FeedDetails/FeedDetails'
-import { useLocation } from 'react-router-dom';
 
 function ProfilePage({ element, onClose }) {
 
@@ -40,7 +39,6 @@ function ProfilePage({ element, onClose }) {
     useEffect(() => {
       dispatch(postTokenAuth(localStorage.getItem('refreshToken')))
     }, [dispatch])
-
 
     const onExit = () => {
       dispatch(postLogoutAuth(localStorage.getItem('refreshToken')))

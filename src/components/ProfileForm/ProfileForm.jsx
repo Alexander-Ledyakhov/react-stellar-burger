@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { getInfoUserApi, patchInfoUserApi } from "../../utils/api";
 
 function ProfileForm() {
-
     const navigate = useNavigate();
     const infoUser = useSelector(state => state.infoUserReducer.user);
     const infoUserSuccess = useSelector(state => state.infoUserReducer.success);

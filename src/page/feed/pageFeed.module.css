@@ -25,14 +25,19 @@
     width: 272px;
 }
 
-.summary_done {
+.summary_readyOrder {
     color: #00CCCC;
 }
 
 .summary_list {
+    min-height: 152px;
+    max-height: 661px;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
-    max-height: 383px;
-    overflow-y: scroll; 
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.summary_list > p:nth-child(20n+10) {
+    margin-bottom: 20px;
 }

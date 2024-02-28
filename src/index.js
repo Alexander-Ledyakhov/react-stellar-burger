@@ -9,14 +9,29 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom'
 import { socketMiddleware } from './services/middleware'
-import { wsActionTypes } from './services/actions/ws'
+
+import {
+  WS_CONNECTION_START_USER,
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_ERROR,
+  WS_GET_MESSAGE,
+  WS_CONNECTION_CLOSED
+} from './services/actions/ws'
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware("wss://norma.nomoreparties.space/orders", wsActionTypes)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(
+  "wss://norma.nomoreparties.space/orders",
+  WS_CONNECTION_START_USER,
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_ERROR,
+  WS_GET_MESSAGE,
+  WS_CONNECTION_CLOSED)));
 const store = createStore(rootReducer, enhancer); 
 
 ReactDOM.render(

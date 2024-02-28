@@ -1,18 +1,12 @@
 import styles from "./feedDetails.module.css"
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as key } from 'uuid';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_START_USER } from "../../services/actions/ws";
 import IconFeed from '../IconFeed/IconFeed'
 import { getOrderApi } from "../../utils/api";
-
-
-
-import { useLocation } from 'react-router-dom';
-
-
 
 export function FeedDetails() {
     const {pathname} = useLocation()
@@ -36,10 +30,11 @@ export function FeedDetails() {
     
     const ordersWS = useSelector(store => store.wsReducer.messages.orders)
     const [order, setOrder] = useState(null)
+    const [orderApi, setOrderApi] = useState(null)
     const { numberId } = useParams();
     
     const items = useSelector(state => state.ingredientsReducer.allIngredients);
-    const [ingredientsIds, setIngredientsIds] = useState('')
+    const [ingredientsIds, setIngredientsIds] = useState(null)
 
     useEffect(() => {
         if (order) {
@@ -48,24 +43,23 @@ export function FeedDetails() {
     }, [order])
 
     useEffect(() => {
-        if (ordersWS) {
-            if ( numberId in ordersWS ) {
-                getOrderApi(numberId).then((json) => {
-                    if (json.success) {
-                        setOrder(json.orders);
-                    }
-                })
+        if (ordersWS && (numberId in ordersWS)) {
+            getOrderApi(numberId).then((json) => {
+                console.log(json)
+                if (json.success) {
+                    setOrderApi(json.orders);
+                }
+            })
+            if (orderApi && typeof orderApi == 'object') {
+                setOrder(orderApi)
             }
         }
     }, [ordersWS, numberId])
 
     useEffect(() => {
-        if (numberId && ordersWS) {
-            setOrder(ordersWS.find(orderWS => {
-                return orderWS._id === numberId
-            })); 
-        }
-    }, [dispatch, ordersWS, numberId])
+        if (!numberId || !ordersWS) return;
+        setOrder(ordersWS.find(orderWS => orderWS._id === numberId))
+    }, [ordersWS, numberId])
 
     const ingredientsItems = useMemo(() => {
         if (ingredientsIds) {
@@ -168,7 +162,5 @@ export function FeedDetails() {
             </div>
         }
         </>
-
-
     );
 }

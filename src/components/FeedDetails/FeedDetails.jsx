@@ -12,22 +12,7 @@ export function FeedDetails() {
     const {pathname} = useLocation()
     const path = pathname.split("/")[1]
     const { visible } = useSelector(state => state.modalReducer);
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (path == 'feed' && !visible) {
-            dispatch({ type: WS_CONNECTION_START });
-            return () => {
-                dispatch({ type: WS_CONNECTION_CLOSED });
-            }
-        } else if (path == 'profile' && !visible) {
-            dispatch({ type: WS_CONNECTION_START_USER });
-            return () => {
-              dispatch({ type: WS_CONNECTION_CLOSED });
-            }
-        }
-    }, [dispatch])
-    
+    const dispatch = useDispatch()    
     const ordersWS = useSelector(store => store.wsReducer.messages.orders)
     const [order, setOrder] = useState(null)
     const [orderApi, setOrderApi] = useState(null)
@@ -36,38 +21,13 @@ export function FeedDetails() {
     const items = useSelector(state => state.ingredientsReducer.allIngredients);
     const [ingredientsIds, setIngredientsIds] = useState(null)
 
-    useEffect(() => {
-        if (order) {
-            setIngredientsIds(order.ingredients)
-        }
-    }, [order])
-
-    useEffect(() => {
-        if (ordersWS && (numberId in ordersWS)) {
-            getOrderApi(numberId).then((json) => {
-                console.log(json)
-                if (json.success) {
-                    setOrderApi(json.orders);
-                }
-            })
-            if (orderApi && typeof orderApi == 'object') {
-                setOrder(orderApi)
-            }
-        }
-    }, [ordersWS, numberId])
-
-    useEffect(() => {
-        if (!numberId || !ordersWS) return;
-        setOrder(ordersWS.find(orderWS => orderWS._id === numberId))
-    }, [ordersWS, numberId])
-
     const ingredientsItems = useMemo(() => {
-        if (ingredientsIds) {
-            return ingredientsIds.map((ingredientID) => {
-                return items.find(item => item._id === ingredientID);
-            })
-        }
-    }, [ingredientsIds])
+        if (!ingredientsIds) return;
+        if (!items) return;
+        return ingredientsIds.map((ingredientID) => {
+            return items.find(item => item._id === ingredientID);
+        })
+    }, [ingredientsIds, items])
 
     const prise = useMemo(() => {
         let sum = 0
@@ -119,6 +79,45 @@ export function FeedDetails() {
     }, [ingredientsUniqueArr])
 
     const marginRight = ingredientsUniqueArr.length > 4 ? '24px' : '0px';
+
+    useEffect(() => {
+        if (path == 'feed' && !visible) {
+            dispatch({ type: WS_CONNECTION_START });
+            return () => {
+                dispatch({ type: WS_CONNECTION_CLOSED });
+            }
+        } else if (path == 'profile' && !visible) {
+            dispatch({ type: WS_CONNECTION_START_USER });
+            return () => {
+              dispatch({ type: WS_CONNECTION_CLOSED });
+            }
+        }
+    }, [dispatch])
+    
+    useEffect(() => {
+        if (order) {
+            setIngredientsIds(order.ingredients)
+        }
+    }, [order])
+
+    useEffect(() => {
+        if (ordersWS && (numberId in ordersWS)) {
+            getOrderApi(numberId).then((json) => {
+                console.log(json)
+                if (json.success) {
+                    setOrderApi(json.orders);
+                }
+            })
+            if (orderApi && typeof orderApi == 'object') {
+                setOrder(orderApi)
+            }
+        }
+    }, [ordersWS, numberId])
+
+    useEffect(() => {
+        if (!numberId || !ordersWS) return;
+        setOrder(ordersWS.find(orderWS => orderWS._id === numberId))
+    }, [ordersWS, numberId])
 
     return (
         <>

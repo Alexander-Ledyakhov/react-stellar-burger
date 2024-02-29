@@ -42,7 +42,7 @@ function Modal({ onClose, children }) {
 
 Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    children: PropTypes.object.isRequired
+    children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
 }
 
 export default Modal;

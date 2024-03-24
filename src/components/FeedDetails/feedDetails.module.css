@@ -1,0 +1,47 @@
+.feedDetails {
+    margin: auto;
+    margin-bottom: 60px;
+    width: 640px;
+    max-height: 620px;
+}
+
+.feedDetails__notModal {
+    margin: 122px auto auto;
+}
+
+.feedDetails_number {
+    text-align: center;
+}
+
+.feedDetails_color {
+    color: #00CCCC;
+}
+
+.feedDetails_footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.feedDetails_price {
+    display: flex;
+    align-items: center;
+}
+
+.feedDetails__ingredients {
+    max-height: 312px; 
+    overflow-y: scroll; 
+    display: grid; 
+    row-gap: 16px; 
+    padding: 0px;
+    overflow: auto;
+}
+
+.feedDetails__ingredient {
+    display: flex;
+    justify-content: space-between;
+}
+
+.feedDetails_description {
+    display: flex;
+    align-items: center;
+}

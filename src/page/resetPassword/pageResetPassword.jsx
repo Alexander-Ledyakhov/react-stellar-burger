@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import { useState } from "react";
 import { resetPasswordApi } from "../../utils/api";
 
-
-
 function ResetPasswordPage() {
 
     const [password, setPassword] = useState('')

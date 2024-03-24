@@ -8,6 +8,7 @@ import { authReducer } from './authReducer'
 import { tokenReducer } from './tokenReducer'
 import { logoutReducer } from './logoutReducer'
 import { infoUserReducer } from './infoUserReducer'
+import { wsReducer } from "./wsReducer"
 
 export const rootReducer = combineReducers({
   ingredientsReducer,
@@ -19,4 +20,5 @@ export const rootReducer = combineReducers({
   tokenReducer,
   logoutReducer,
   infoUserReducer,
+  wsReducer,
 });

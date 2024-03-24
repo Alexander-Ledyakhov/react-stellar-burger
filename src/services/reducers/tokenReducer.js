@@ -8,7 +8,8 @@ import {
     success: false,
     accessToken: '',
     refreshToken: '',
-    error: false
+    ddd: {},
+    error: ''
   };
   
   export const tokenReducer = (state = initialState, action = {}) => {
@@ -18,7 +19,7 @@ import {
         return {
             ...state,
             success: false,
-            error: false
+            error: ''
         };
       }
       case POST_TOKEN_SUCCESS: {
@@ -29,7 +30,8 @@ import {
           success: action.payload.success,
           accessToken: action.payload.accessToken,
           refreshToken: action.payload.refreshToken,
-          error: false
+          ddd: action.payload,
+          error: ''
         };
       }
       case POST_TOKEN_ERROR: {
@@ -38,7 +40,7 @@ import {
           success: false,
           accessToken: '',
           refreshToken: '',
-          error: true
+          error: action.payload
         };
       }
       default: {

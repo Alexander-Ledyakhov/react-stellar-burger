@@ -1,10 +1,7 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-
 import style from './pageLogin.module.css'
-
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useMemo } from "react";
-
 import { useDispatch, useSelector } from 'react-redux';
 import { postAuth } from "../../services/actions/auth";
 
@@ -27,8 +24,6 @@ function LodinPage() {
         dispatch(postAuth(email, password));
     }
 
-
-
     useEffect(() => {
         (success) && 
         (!error) && 
@@ -37,8 +32,6 @@ function LodinPage() {
             '/', {replace: true}))
 
     }, [success, error])
-
-
 
     return (
         <main className={style.login}>

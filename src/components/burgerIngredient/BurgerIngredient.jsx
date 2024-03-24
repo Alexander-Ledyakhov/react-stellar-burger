@@ -7,17 +7,17 @@ import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { useDispatch } from 'react-redux';
 import { MODAL_OPEN } from '../../services/actions/modal';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function BurgerIngredient({itemContent}) {
 
+    const location = useLocation();
     const { ingredients, bun } = useSelector(state => state.constructorIngredientsReducer);
-    
+
     const [, dragRef] = useDrag({
         type: 'itemData',
         item: {itemContent}
     });
-
 
     const getCount = useMemo(() => {
         const countIngredients = ingredients.filter(
@@ -31,13 +31,10 @@ function BurgerIngredient({itemContent}) {
                 return countBun
             }
         }
-
         return countIngredients.length + countBun;
     }, [ingredients, bun, itemContent]);
 
-
     const dispatch = useDispatch();
-
 
     const openModalItem = () => {
         const type = 'ingredient'
@@ -49,10 +46,8 @@ function BurgerIngredient({itemContent}) {
         })
     }
 
-
-
     return (
-        <Link to={`/ingredients/${itemContent._id}`} className={styles.ingredient__link} onClick={openModalItem}>
+        <Link to={`/ingredients/${itemContent._id}`} className={styles.ingredient__link} onClick={openModalItem} state={{ pathname: location }}>
             <div className={styles.ingredient} draggable ref={dragRef}> 
                 <Counter count={getCount} size="default" extraClass="m-1" />
                 <img src={itemContent.image} alt={`картинка ${itemContent.name}`} />

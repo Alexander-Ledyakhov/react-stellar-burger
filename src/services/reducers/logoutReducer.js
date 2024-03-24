@@ -28,9 +28,7 @@ import {
         };
       }
       case POST_LOGOUT_SUCCESS: {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('path');
+        localStorage.clear();
         return {
           ...state,
           success: action.payload.success,

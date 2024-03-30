@@ -1,7 +1,7 @@
 import { 
     MODAL_CLOSE, 
     MODAL_OPEN,
-    TTodoActions
+    TTodoActionsModalOpen
 } from "../actions/modal"
 
 type TTodoListState = {
@@ -16,7 +16,7 @@ const initialState: TTodoListState = {
     title: ''
 }
 
-export function modalReducer(state = initialState, action: TTodoActions) {
+export function modalReducer(state = initialState, action: TTodoActionsModalOpen) {
 
     switch (action.type) {
         case MODAL_CLOSE:

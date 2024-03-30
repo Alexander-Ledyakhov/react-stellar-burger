@@ -1,18 +1,16 @@
 import styles from './orderCard.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import IconIngredients from '../IconIngredients/IconIngredients'
-import { useDispatch } from 'react-redux';
 import { FC, useMemo } from 'react';
 import { MODAL_OPEN } from '../../services/actions/modal';
-import { v4 as key } from 'uuid';
 import { Link, useLocation } from "react-router-dom";
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
 import { TIngredient } from '../../types/typesApi';
 import { TOrderCard } from '../../types/functionComponentType';
 
 const OrderCard: FC<TOrderCard> = ({order, link}) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const ingredientsID = order.ingredients
     const items = useAppSelector(state => state.ingredientsReducer.allIngredients);
@@ -66,8 +64,8 @@ const OrderCard: FC<TOrderCard> = ({order, link}) => {
                     <div className={`${styles.order_components} mt-6`}>
                         <div className={styles.order_ingredients}>
                             {
-                                ingredientsItems.slice(0, 6).map((IconIngredient, index) => (
-                                    <IconIngredients ingredients={IconIngredient} key={key()} index={index} allIndex={ingredientsItems.length}/>
+                                ingredientsItems.slice(0, 6).map((IconIngredient, index: number) => (
+                                    <IconIngredients ingredients={IconIngredient} key={IconIngredient._id+index} index={index} allIndex={ingredientsItems.length}/>
                                 ))
                             }
                         </div>

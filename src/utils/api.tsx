@@ -1,14 +1,8 @@
-import { TJson } from "../types/typesApi";
+import { TCurrentOrder, TIngredient, TOrder, TUser } from "../types/typesApi";
 
 const baseUrl: string = 'https://norma.nomoreparties.space/api'
 
-type TResponse = {
-  readonly json: Function;
-  readonly status: number;
-  readonly ok: boolean;
-}
-
-const checkStatusRes = (response: TResponse): Promise<TJson> => {
+const checkStatusRes = (response: Response) => {
     if (response.ok) {
       return response.json();
     } else {
@@ -16,11 +10,20 @@ const checkStatusRes = (response: TResponse): Promise<TJson> => {
     }
 }
 
-export async function getIngredientsApi() {
+//-------------------getIngredientsApi
+export async function getIngredientsApi(): Promise<{
+  data: TIngredient[]; 
+  success: boolean; 
+}> {
   return await fetch(`${baseUrl}/ingredients`).then(res => checkStatusRes(res));
 }
 
-export async function postOrderDetailsApi(ingredientsID: string[], token: string) {
+//-------------------postOrderDetailsApi
+export async function postOrderDetailsApi(ingredientsID: string[], token: string): Promise<{
+  success: boolean; 
+  name: string
+  order: TOrder
+}> {
   return await fetch(`${baseUrl}/orders`, {
     method: "POST",
     headers: { 
@@ -33,12 +36,11 @@ export async function postOrderDetailsApi(ingredientsID: string[], token: string
   }).then(res => checkStatusRes(res));
 }
 
-
-
-
-
-
-export async function checkEmailApi(email: string) {
+//-------------------checkEmailApi
+export async function checkEmailApi(email: string): Promise<{
+  success: boolean; 
+  message: string
+}> {
   return await fetch(`${baseUrl}/password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -48,7 +50,11 @@ export async function checkEmailApi(email: string) {
   }).then(res => checkStatusRes(res));
 }
 
-export async function resetPasswordApi(password: string, codePassword: string) {
+//-------------------resetPasswordApi
+export async function resetPasswordApi(password: string, codePassword: string): Promise<{
+  success: boolean; 
+  message: string;
+}> {
   return await fetch(`${baseUrl}/password-reset/reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -67,13 +73,13 @@ export async function resetPasswordApi(password: string, codePassword: string) {
 
 
 
-//-----------------
 //POST https://norma.nomoreparties.space/api/auth/register - эндпоинт для регистрации пользователя.
-//POST https://norma.nomoreparties.space/api/auth/login - эндпоинт для авторизации.
-//POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
-//POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
-
-export async function postRegisterApi(email: string, password: string, name: string) {
+export async function postRegisterApi(email: string, password: string, name: string): Promise<{
+  success: boolean;
+  user: TUser;
+  accessToken: string;
+  refreshToken: string;
+}>  {
   return await fetch(`${baseUrl}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -85,7 +91,13 @@ export async function postRegisterApi(email: string, password: string, name: str
   }).then(res => checkStatusRes(res));
 }
 
-export async function postAuthApi(email: string, password: string) {
+//POST https://norma.nomoreparties.space/api/auth/login - эндпоинт для авторизации.
+export async function postAuthApi(email: string, password: string): Promise<{
+  success: boolean;
+  user: TUser;
+  accessToken: string;
+  refreshToken: string;
+}> {
   return await fetch(`${baseUrl}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -96,7 +108,12 @@ export async function postAuthApi(email: string, password: string) {
   }).then(res => checkStatusRes(res));
 }
 
-export async function postTokenApi(token: string) {
+//POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
+export async function postTokenApi(token: string): Promise<{
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+}> {
   return await fetch(`${baseUrl}/auth/token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -106,7 +123,11 @@ export async function postTokenApi(token: string) {
   }).then(res => checkStatusRes(res));
 }
 
-export async function postLogoutApi(token: string) {
+//POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
+export async function postLogoutApi(token: string): Promise<{
+  success: boolean;
+  message: string;
+}> {
   return await fetch(`${baseUrl}/auth/logout`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -120,11 +141,13 @@ export async function postLogoutApi(token: string) {
 
 
 
+
+
 //GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
-//PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
-
-
-export async function getInfoUserApi(token: string) {
+export async function getInfoUserApi(token: string): Promise<{
+  success: boolean;
+  user: TUser;
+}> {
   return await fetch(`${baseUrl}/auth/user`, {
     headers: { 
       authorization: token,
@@ -133,8 +156,11 @@ export async function getInfoUserApi(token: string) {
   }).then(res => checkStatusRes(res));
 }
 
-
-export async function patchInfoUserApi(token: string, email: string, password: string, name: string) {
+//PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
+export async function patchInfoUserApi(token: string, email: string, password: string, name: string): Promise<{
+  success: boolean;
+  user: TUser;
+}> {
   return await fetch(`${baseUrl}/auth/user`, {
     method: "PATCH",
     headers: { 
@@ -152,7 +178,10 @@ export async function patchInfoUserApi(token: string, email: string, password: s
 
 
 //GET https://norma.nomoreparties.space/api/orders/{номер заказа} 
-
-export async function getOrderApi(numberId: string) {
+export async function getOrderApi(numberId: string): Promise<{
+  success: boolean; 
+  name: string
+  orders?: TCurrentOrder
+}>  {
   return await fetch(`${baseUrl}/orders/${numberId}`).then(res => checkStatusRes(res));
 }

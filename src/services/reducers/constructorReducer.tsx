@@ -4,7 +4,7 @@ import {
     ADD_INGREDIENT, 
     REMOVE_INGREDIENT, 
     CHANGE_ORDER_INGREDIENT, 
-    TTodoActions
+    TTodoActionsAddIngredient
 } from "../actions/constructorIngredients";
 
 type TTodoListState = {
@@ -19,7 +19,7 @@ const initialState: TTodoListState = {
     bun: null
 }
 
-export function constructorIngredientsReducer(state = initialState, action: TTodoActions) {
+export function constructorIngredientsReducer(state = initialState, action: TTodoActionsAddIngredient) {
     switch (action.type) {
 
         case ADD_BUN:

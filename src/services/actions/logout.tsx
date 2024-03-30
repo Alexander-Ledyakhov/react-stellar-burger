@@ -1,12 +1,12 @@
 import { postLogoutApi } from "../../utils/api";
-import { TDispatch } from "../../types/typesReact"
+import { AppDispatch } from "../../types/typesReact"
 
 export const POST_LOGOUT_REQUEST: 'POST_LOGOUT_REQUEST' = 'POST_LOGOUT_REQUEST';
 export const POST_LOGOUT_SUCCESS: 'POST_LOGOUT_SUCCESS' = 'POST_LOGOUT_SUCCESS';
 export const POST_LOGOUT_ERROR: 'POST_LOGOUT_ERROR' = 'POST_LOGOUT_ERROR';
 
 export function postLogoutAuth(token: string) {
-  return (dispatch: TDispatch) => {
+  return (dispatch: AppDispatch) => {
       dispatch({type: POST_LOGOUT_REQUEST})
       
       postLogoutApi(token)
@@ -40,7 +40,7 @@ export interface IPostLogoutErrorAction {
   readonly type: typeof POST_LOGOUT_ERROR;
 }
 
-export type TTodoActions = 
+export type TTodoActionsPostLogout = 
   | IPostLogoutRequestAction
   | IPostLogoutSuccessAction
   | IPostLogoutErrorAction

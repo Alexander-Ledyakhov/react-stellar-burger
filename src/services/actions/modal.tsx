@@ -13,6 +13,6 @@ export interface IModalOpenAction {
     }
 }
   
-export type TTodoActions = 
+export type TTodoActionsModalOpen = 
     | IModalCloseAction
     | IModalOpenAction

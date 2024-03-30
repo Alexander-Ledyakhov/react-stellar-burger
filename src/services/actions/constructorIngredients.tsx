@@ -33,7 +33,7 @@ export interface IChangeOrderIngredientAction {
     };
 }
   
-export type TTodoActions = 
+export type TTodoActionsAddIngredient = 
     | IAddIngredientAction
     | IAddBunAction
     | IRemoveIngredientAction

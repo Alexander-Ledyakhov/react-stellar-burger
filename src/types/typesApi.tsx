@@ -59,22 +59,8 @@ export type TCurrentOrder = {
 
 export type TUser = {
     readonly email: string;
-    readonly password: string;
+    readonly password?: string;
     readonly name: string;
-}
-
-export type TJson = {
-    readonly success: boolean;
-    readonly name: string;
-    readonly order: TOrder;
-    readonly message: string;
-    readonly user: TUser;
-    readonly accessToken: string;
-    readonly refreshToken: string;
-    readonly data: TIngredient[];
-    orders: TCurrentOrder;
-    total: number;
-    totalToday: number;
 }
 
 export type TPostTokenApi = {

@@ -2,7 +2,7 @@ import {
   POST_TOKEN_REQUEST,
   POST_TOKEN_SUCCESS,
   POST_TOKEN_ERROR,
-  TTodoActions
+  TTodoActionsPostToken
 } from "../actions/token";
   
 type TTodoListState = {
@@ -19,7 +19,7 @@ const initialState: TTodoListState = {
   error: ''
 };
 
-export const tokenReducer = (state = initialState, action: TTodoActions): TTodoListState => {
+export const tokenReducer = (state = initialState, action: TTodoActionsPostToken): TTodoListState => {
 
   switch (action.type) {
     case POST_TOKEN_REQUEST: {

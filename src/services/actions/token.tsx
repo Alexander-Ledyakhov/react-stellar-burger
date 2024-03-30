@@ -1,5 +1,5 @@
 import { postTokenApi } from "../../utils/api";
-import { TDispatch } from "../../types/typesReact"
+import { AppDispatch } from "../../types/typesReact"
 import { TError } from "../../types/typesApi";
 
 export const POST_TOKEN_REQUEST: 'POST_TOKEN_REQUEST' = 'POST_TOKEN_REQUEST';
@@ -7,7 +7,7 @@ export const POST_TOKEN_SUCCESS: 'POST_TOKEN_SUCCESS' = 'POST_TOKEN_SUCCESS';
 export const POST_TOKEN_ERROR: 'POST_TOKEN_ERROR' = 'POST_TOKEN_ERROR';
 
 export function postTokenAuth(token: string) {
-  return (dispatch: TDispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: POST_TOKEN_REQUEST})
     
     postTokenApi(token)
@@ -45,7 +45,7 @@ export interface IPostTokenErrorAction {
   readonly payload: TError;
 }
 
-export type TTodoActions = 
+export type TTodoActionsPostToken = 
   | IPostTokenRequestAction
   | IPostTokenSuccessAction
   | IPostTokenErrorAction

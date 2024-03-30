@@ -1,5 +1,4 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useEffect, useCallback } from "react";
 
 import AppHeader from "../appHeader/AppHeader";
@@ -22,10 +21,10 @@ import { MODAL_CLOSE } from '../../services/actions/modal';
 
 import {FeedPage} from '../../page/feed/pageFeed'
 import {FeedDetails} from '../FeedDetails/FeedDetails'
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
 
 function App() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { visible, type } = useAppSelector(state => state.modalReducer);
     const location = useLocation();

@@ -2,7 +2,6 @@ import style from './pageProfile.module.css'
 
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { FC, useEffect, useMemo } from "react";
-import { useDispatch } from 'react-redux';
 
 import { postLogoutAuth } from "../../services/actions/logout";
 import { getInfoUser } from "../../services/actions/infoUser";
@@ -12,11 +11,11 @@ import Modal from '../../components/Modal/Modal'
 import {FeedDetails} from '../../components/FeedDetails/FeedDetails'
 
 import {type TProfilePage} from '../../types/functionComponentType'
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
 
 const ProfilePage: FC<TProfilePage> = ({ element, onClose }) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { visible } = useAppSelector(state => state.modalReducer);
     const tokenSuccess = useAppSelector(state => state.tokenReducer.success)

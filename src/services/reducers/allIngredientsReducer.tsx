@@ -3,7 +3,7 @@ import {
     GET_INGREDIENTS_SUCCESS, 
     GET_INGREDIENTS_ERROR,
     GET_INGREDIENTS_REQUEST,
-    TTodoActions
+    TTodoActionsGetIngredient
 } from "../actions/allIngredients";
 
 type TTodoListState = {
@@ -33,7 +33,7 @@ const initialState: TTodoListState = {
     isError: false,
 }
 
-export const ingredientsReducer = ( state = initialState, action: TTodoActions ) => {    
+export const ingredientsReducer = ( state = initialState, action: TTodoActionsGetIngredient ): TTodoListState => {    
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

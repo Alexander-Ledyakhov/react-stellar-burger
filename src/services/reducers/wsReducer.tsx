@@ -5,7 +5,7 @@ import {
     WS_GET_MESSAGE
 } from '../actions/ws';
 
-import type { TTodoActions } from '../actions/ws';
+import type { TTodoActionsWs } from '../actions/ws';
 import {TError, TWsAllOrders} from '../../types/typesApi'
 
 type TTodoListState = {
@@ -26,7 +26,7 @@ const initialState: TTodoListState = {
     error: undefined
 };
 
-export const wsReducer = (state = initialState, action: TTodoActions) => {
+export const wsReducer = (state = initialState, action: TTodoActionsWs) => {
 
     switch (action.type) {
         case WS_CONNECTION_SUCCESS:

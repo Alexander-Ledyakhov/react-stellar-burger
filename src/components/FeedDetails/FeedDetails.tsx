@@ -1,20 +1,26 @@
 import styles from "./feedDetails.module.css"
-import { useDispatch } from 'react-redux';
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_START_USER } from "../../services/actions/ws";
 import { getOrderApi } from "../../utils/api";
-import { useAppSelector } from "../../types/typesReact";
+import { useAppDispatch, useAppSelector } from "../../types/typesReact";
 import { TCurrentOrder, TIngredient } from "../../types/typesApi";
 import { FeedIngredientDetails } from "./FeedIngredientDetails";
+import { urlOrders } from "../../utils/data";
 
 export function FeedDetails() {
     const {pathname} = useLocation()
     const path = pathname.split("/")[1]
     const { visible } = useAppSelector(state => state.modalReducer);
-    const dispatch = useDispatch()    
+    const dispatch = useAppDispatch()    
     const ordersWS = useAppSelector(store => store.wsReducer.orders)
+    if (ordersWS) {
+        console.log(ordersWS);
+      }
+
+
+
     const [order, setOrder] = useState<TCurrentOrder>()
     const [orderApi, setOrderApi] = useState<TCurrentOrder>()
     const { numberId } = useParams<string>();
@@ -97,12 +103,19 @@ export function FeedDetails() {
 
     useEffect(() => {
         if (path === 'feed' && !visible) {
-            dispatch({ type: WS_CONNECTION_START });
+            dispatch({
+                type: WS_CONNECTION_START,
+                payload: `${urlOrders}/all`
+            });
             return () => {
                 dispatch({ type: WS_CONNECTION_CLOSED });
             }
         } else if (path === 'profile' && !visible) {
-            dispatch({ type: WS_CONNECTION_START_USER });
+            const accessToken = localStorage.getItem('accessToken') as string
+            dispatch({ 
+                type: WS_CONNECTION_START_USER,
+                payload: `${urlOrders}?token=${accessToken.slice(7)}`
+            });
             return () => {
               dispatch({ type: WS_CONNECTION_CLOSED });
             }

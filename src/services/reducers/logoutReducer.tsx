@@ -3,7 +3,7 @@ import {
   POST_LOGOUT_REQUEST,
   POST_LOGOUT_SUCCESS,
   POST_LOGOUT_ERROR,
-  TTodoActions
+  TTodoActionsPostLogout
 } from "../actions/logout";
 
 type TTodoListState = {
@@ -27,7 +27,7 @@ const initialState: TTodoListState = {
   request: false
 };
 
-export const logoutReducer = (state = initialState, action: TTodoActions) => {
+export const logoutReducer = (state = initialState, action: TTodoActionsPostLogout) => {
 
   switch (action.type) {
     case POST_LOGOUT_REQUEST: {

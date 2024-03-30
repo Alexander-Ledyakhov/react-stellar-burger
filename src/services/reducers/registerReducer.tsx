@@ -3,7 +3,7 @@ import {
   POST_REGISTER_REQUEST,
   POST_REGISTER_SUCCESS,
   POST_REGISTER_ERROR,
-  TTodoActions
+  TTodoActionsPostRegister
 } from "../actions/register";
 
 type TTodoListState = {
@@ -22,7 +22,7 @@ const initialState: TTodoListState = {
   error: false
 };
 
-export const registerReducer = (state = initialState, action: TTodoActions) => {
+export const registerReducer = (state = initialState, action: TTodoActionsPostRegister) => {
   
   switch (action.type) {
     case POST_REGISTER_REQUEST: {

@@ -1,21 +1,20 @@
 import styles from './pageFeed.module.css';
 import OrderCard from '../../components/OrderCard/OrderCard'
 import { FC, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/ws";
-import { v4 as key } from 'uuid';
 import Modal from '../../components/Modal/Modal'
 import {FeedDetails} from '../../components/FeedDetails/FeedDetails'
 import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
 import { TOnClose } from '../../types/functionComponentType';
 import { TWsAllOrders } from '../../types/typesApi';
+import { urlOrders } from '../../utils/data';
 
 export const FeedPage: FC<TOnClose> = ({onClose}) => {
 
   const {pathname} = useLocation()
   const { visible } = useAppSelector(state => state.modalReducer);
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const ordersWS = useAppSelector(store => store.wsReducer.orders)
   const totalWS = useAppSelector(store => store.wsReducer.total)
@@ -40,14 +39,17 @@ export const FeedPage: FC<TOnClose> = ({onClose}) => {
     const orders = []
     if (ordersWS) {
       for (let orderWS of ordersWS) {
-        orders.push(<OrderCard order={orderWS} key={orderWS._id} link={pathname} />)
+        orders.push(<OrderCard order={orderWS} key={orderWS._id} link={pathname}/>)
       }
     }
     return orders
   }, [ordersWS, pathname])
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch({ 
+      type: WS_CONNECTION_START,
+      payload: `${urlOrders}/all`
+    });
     return () => {
         dispatch({ type: WS_CONNECTION_CLOSED });
     }
@@ -75,16 +77,16 @@ export const FeedPage: FC<TOnClose> = ({onClose}) => {
               <div className={styles.summary_status}>
                 <h2 className="mb-4 text text_type_main-medium">Готовы:</h2>
                 <div className={`${styles.summary_readyOrder} ${styles.summary_list}`}>
-                  {readyOrders && readyOrders.map((readyOrder) => (
-                    <p key={key()} className={`mt-2 mr-2 text text_type_digits-default`}>{readyOrder}</p>
+                  {readyOrders && readyOrders.map((readyOrder, index: number) => (
+                    <p key={readyOrder+index} className={`mt-2 mr-2 text text_type_digits-default`}>{readyOrder}</p>
                   ))}
                 </div>
               </div>
               <div className={styles.summary_status}>
                 <h2 className="mb-4 text text_type_main-medium">В работе:</h2>
                 <div className={styles.summary_list}>
-                  {pendingOrders && pendingOrders.map((pendingOrder) => (
-                    <p key={key()} className={`mt-2 mr-2 text text_type_digits-default`}>{pendingOrder}</p>
+                  {pendingOrders && pendingOrders.map((pendingOrder, index: number) => (
+                    <p key={pendingOrder+index} className={`mt-2 mr-2 text text_type_digits-default`}>{pendingOrder}</p>
                   ))}
                 </div>
               </div>

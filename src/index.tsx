@@ -27,16 +27,19 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(
-  "wss://norma.nomoreparties.space/orders",
-  WS_CONNECTION_START_USER,
-  WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_CONNECTION_ERROR,
-  WS_GET_MESSAGE,
-  WS_CONNECTION_CLOSED)));
+const wsActions = {
+  wsInitAuth: WS_CONNECTION_START_USER,
+  wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSED,
+  wsOpen: WS_CONNECTION_SUCCESS,
+  wsError: WS_CONNECTION_ERROR,
+  wsMessage: WS_GET_MESSAGE
+}
+
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions)));
 
 export const store = createStore(rootReducer, enhancer); 
+
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 

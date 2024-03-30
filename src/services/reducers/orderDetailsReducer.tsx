@@ -2,7 +2,7 @@ import {
   POST_ORDER_REQUEST,
   POST_ORDER_SUCCESS,
   POST_ORDER_ERROR,
-  TTodoActions
+  TTodoActionsPostOrderDetails
 } from "../actions/orderDetails";
 
 type TTodoListState = {
@@ -19,7 +19,7 @@ const initialState: TTodoListState = {
   isError: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action: TTodoActions) => {
+export const orderDetailsReducer = (state = initialState, action: TTodoActionsPostOrderDetails) => {
   
   switch (action.type) {
     case POST_ORDER_REQUEST: {

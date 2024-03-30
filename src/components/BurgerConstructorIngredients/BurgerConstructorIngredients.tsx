@@ -2,16 +2,16 @@ import styles from "./BurgerConstructorIngredients.module.css"
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { useDrag, useDrop } from 'react-dnd'
 import { useRef, useCallback, FC, LegacyRef } from 'react'
-import { useDispatch } from 'react-redux';
 import { REMOVE_INGREDIENT, CHANGE_ORDER_INGREDIENT} from '../../services/actions/constructorIngredients';
 import { TBurgerConstructor } from "../../types/functionComponentType";
+import { useAppDispatch } from "../../types/typesReact";
 
 export const BurgerConstructorIngredients: FC<TBurgerConstructor> = ({ index, ingredient }) => {
 
   const ingredientID = ingredient.key
   const ingredientItem = ingredient.item
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef(null)
 
 const removeIngredient = (item: string) => {

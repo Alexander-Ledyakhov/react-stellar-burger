@@ -1,5 +1,5 @@
 import { getIngredientsApi } from "../../utils/api";
-import { TDispatch } from "../../types/typesReact"
+import { AppDispatch } from "../../types/typesReact"
 import { TIngredient } from "../../types/typesApi";
 
 export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS" = "GET_INGREDIENTS";
@@ -7,7 +7,8 @@ export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS" = "GET_INGREDIEN
 export const GET_INGREDIENTS_ERROR: "GET_INGREDIENTS_ERROR" = "GET_INGREDIENTS_ERROR";
 
 export function getIngredients() {
-  return (dispatch: TDispatch) => {
+  
+  return (dispatch: AppDispatch) => {
     dispatch({type: GET_INGREDIENTS_REQUEST})
     
     getIngredientsApi()
@@ -43,7 +44,7 @@ export interface IGetIngredientsErrorAction {
   readonly type: typeof GET_INGREDIENTS_ERROR;
 }
 
-export type TTodoActions = 
+export type TTodoActionsGetIngredient = 
   | IGetIngredientsRequestAction
   | IGetIngredientsSuccessAction
   | IGetIngredientsErrorAction

@@ -1,15 +1,15 @@
 import styles from './profileOrders.module.css';
 import OrderCard from '../OrderCard/OrderCard'
 import { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START_USER } from "../../services/actions/ws";
 import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
+import { urlOrders } from '../../utils/data';
 
 function ProfileOrders() {
   
   const {pathname} = useLocation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const profileOrders = useAppSelector(store => store.wsReducer.orders)
 
   const orders = useMemo(() => {
@@ -23,7 +23,11 @@ function ProfileOrders() {
   }, [profileOrders, pathname])
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START_USER });
+    const accessToken = localStorage.getItem('accessToken') as string
+    dispatch({ 
+      type: WS_CONNECTION_START_USER,
+      payload: `${urlOrders}?token=${accessToken.slice(7)}`
+    });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     }

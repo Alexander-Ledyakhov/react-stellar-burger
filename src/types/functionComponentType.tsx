@@ -53,3 +53,12 @@ export type TIconFeed = {
     image: string;
     name: string;
 }
+
+export type TwsActions = {
+    wsInitAuth: string;
+    wsInit: string;
+    wsClose: string;
+    wsOpen: string;
+    wsError: string;
+    wsMessage: string;
+};

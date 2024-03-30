@@ -2,13 +2,12 @@ import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer
 import style from './pageLogin.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useMemo, FormEvent } from "react";
-import { useDispatch } from 'react-redux';
 import { postAuth } from "../../services/actions/auth";
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
 
 function LodinPage() {    
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');

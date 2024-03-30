@@ -2,7 +2,7 @@ import {
     GET_INFO_USER_REQUEST, 
     GET_INFO_USER_SUCCESS,
     GET_INFO_USER_ERROR,
-    TTodoActions
+    TTodoActionsGetInfoUser
 } from "../actions/infoUser";
 
 type TTodoListState = {
@@ -19,7 +19,7 @@ const initialState: TTodoListState = {
     error: false
 }
 
-export const infoUserReducer = ( state = initialState, action: TTodoActions ) => {    
+export const infoUserReducer = ( state = initialState, action: TTodoActionsGetInfoUser ) => {    
     switch (action.type) {
         case GET_INFO_USER_REQUEST:
             return {

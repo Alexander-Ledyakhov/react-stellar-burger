@@ -1,7 +1,6 @@
 import styles from "./burgerConstructor.module.css"
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import {BurgerConstructorIngredients} from '../BurgerConstructorIngredients/BurgerConstructorIngredients'
-import { useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/constructorIngredients';
 import { v4 as key } from 'uuid';
@@ -9,14 +8,14 @@ import { useMemo } from "react";
 import { MODAL_OPEN } from '../../services/actions/modal';
 import { postOrderDetails } from "../../services/actions/orderDetails";
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from "../../types/typesReact";
+import { useAppDispatch, useAppSelector } from "../../types/typesReact";
 import { TIngredient } from "../../types/typesApi";
 
 
 function BurgerConstructor() {
  
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { ingredients, bun, empty } = useAppSelector(state => state.constructorIngredientsReducer);
     const [, dropTarget] = useDrop({
         accept: "itemData",

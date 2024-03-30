@@ -1,12 +1,12 @@
 import { postRegisterApi } from "../../utils/api";
-import { TDispatch } from "../../types/typesReact"
+import { AppDispatch } from "../../types/typesReact"
 
 export const POST_REGISTER_REQUEST: 'POST_REGISTER_REQUEST' = 'POST_REGISTER_REQUEST';
 export const POST_REGISTER_SUCCESS: 'POST_REGISTER_SUCCESS' = 'POST_REGISTER_SUCCESS';
 export const POST_REGISTER_ERROR: 'POST_REGISTER_ERROR' = 'POST_REGISTER_ERROR';
 
 export function postRegister(email: string, password: string, name: string) {
-  return (dispatch: TDispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: POST_REGISTER_REQUEST})
     
     postRegisterApi(email, password, name)
@@ -35,7 +35,6 @@ export interface IPostRegisterSuccessAction {
     success: boolean
     user: {
       email: string;
-      password: string;
       name: string;
     };
     accessToken: string;
@@ -47,7 +46,7 @@ export interface IPostRegisterErrorAction {
   readonly type: typeof POST_REGISTER_ERROR;
 }
 
-export type TTodoActions = 
+export type TTodoActionsPostRegister = 
   | IPostRegisterRequestAction
   | IPostRegisterSuccessAction
   | IPostRegisterErrorAction

@@ -2,10 +2,9 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import styles from "./burgerIngredient.module.css"
 import { useDrag } from "react-dnd";
 import { FC, useMemo } from "react";
-import { useDispatch } from 'react-redux';
 import { MODAL_OPEN } from '../../services/actions/modal';
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector } from "../../types/typesReact";
+import { useAppDispatch, useAppSelector } from "../../types/typesReact";
 import { TBurgerIngredient } from "../../types/functionComponentType";
 
 const BurgerIngredient: FC<TBurgerIngredient> = ({itemContent}) => {
@@ -33,7 +32,7 @@ const BurgerIngredient: FC<TBurgerIngredient> = ({itemContent}) => {
         return countIngredients.length + countBun;
     }, [ingredients, bun, itemContent]);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const openModalItem = () => {
         const type = 'ingredient'

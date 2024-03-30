@@ -4,14 +4,13 @@ import style from './pageRegister.module.css'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect, FormEvent } from "react";
-import { useDispatch } from 'react-redux';
 
 import { postRegister } from "../../services/actions/register";
-import { useAppSelector } from '../../types/typesReact';
+import { useAppDispatch, useAppSelector } from '../../types/typesReact';
 
 function Register() {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
 

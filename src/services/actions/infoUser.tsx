@@ -1,12 +1,12 @@
 import { getInfoUserApi } from "../../utils/api";
-import { TDispatch } from "../../types/typesReact"
+import { AppDispatch } from "../../types/typesReact"
 
 export const GET_INFO_USER_REQUEST: "GET_INFO_USER_REQUEST" = "GET_INFO_USER_REQUEST";
 export const GET_INFO_USER_SUCCESS: "GET_INFO_USER_SUCCESS" = "GET_INFO_USER_SUCCESS";
 export const GET_INFO_USER_ERROR: "GET_INFO_USER_ERROR" = "GET_INFO_USER_ERROR";
 
 export function getInfoUser(token: string) {
-  return (dispatch: TDispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: GET_INFO_USER_REQUEST})
     
     getInfoUserApi(token)
@@ -44,7 +44,7 @@ export interface IGetInfoUserErrorAction {
   readonly type: typeof GET_INFO_USER_ERROR;
 }
 
-export type TTodoActions = 
+export type TTodoActionsGetInfoUser = 
   | IGetInfoUserRequestAction
   | IGetInfoUserSuccessAction
   | IGetInfoUserErrorAction

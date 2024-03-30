@@ -3,7 +3,7 @@ import {
   POST_AUTH_REQUEST,
   POST_AUTH_SUCCESS,
   POST_AUTH_ERROR,
-  TTodoActions
+  TTodoActionsAuth
 } from "../actions/auth";
   
 type TTodoListState = {
@@ -24,7 +24,7 @@ const initialState: TTodoListState = {
   request: false
 };
   
-export const authReducer = (state = initialState, action: TTodoActions) => {
+export const authReducer = (state = initialState, action: TTodoActionsAuth) => {
 
   switch (action.type) {
     case POST_AUTH_REQUEST: {

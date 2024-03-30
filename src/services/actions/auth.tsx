@@ -1,12 +1,12 @@
 import { postAuthApi } from "../../utils/api";
-import { TDispatch } from "../../types/typesReact"
+import { AppDispatch } from "../../types/typesReact"
 
 export const POST_AUTH_REQUEST: 'POST_AUTH_REQUEST' = 'POST_AUTH_REQUEST';
 export const POST_AUTH_SUCCESS: 'POST_AUTH_SUCCESS' = 'POST_AUTH_SUCCESS';
 export const POST_AUTH_ERROR: 'POST_AUTH_ERROR' = 'POST_AUTH_ERROR';
 
 export function postAuth(email: string, password: string) {
-  return (dispatch: TDispatch) => {
+  return (dispatch: AppDispatch) => {
       dispatch({type: POST_AUTH_REQUEST})
       
       postAuthApi(email, password)
@@ -46,7 +46,7 @@ export interface IPostAuthErrorAction {
   readonly type: typeof POST_AUTH_ERROR;
 }
 
-export type TTodoActions = 
+export type TTodoActionsAuth = 
   | IPostAuthRequestAction
   | IPostAuthSuccessAction
   | IPostAuthErrorAction

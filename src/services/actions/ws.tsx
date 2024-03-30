@@ -43,7 +43,7 @@ export interface IWsConnectionClosedAction {
     readonly type: typeof WS_CONNECTION_CLOSED;
 }
 
-export type TTodoActions = 
+export type TTodoActionsWs = 
     | IWsConnectionStartUserAction
     | IWsConnectionStartAction
     | IWsConnectionSuccessAction

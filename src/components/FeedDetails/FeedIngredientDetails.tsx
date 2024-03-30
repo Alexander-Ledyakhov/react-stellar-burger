@@ -1,6 +1,5 @@
 import styles from "./feedDetails.module.css"
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { v4 as key } from 'uuid';
 import IconFeed from '../IconFeed/IconFeed'
 import { FC } from "react";
 import { TFeedIngredientDetails } from "../../types/functionComponentType";
@@ -16,9 +15,9 @@ export const FeedIngredientDetails:FC<TFeedIngredientDetails> = ({ingredientsIte
                             className={`mt-6 ${styles.feedDetails__ingredients} custom-scroll`} 
                         >
                                 {ingredientsItems.map((ingredient) => (
-                                    <li  style={{ marginRight }} key={key()} className={`${styles.feedDetails__ingredient}`} >
+                                    <li  style={{ marginRight }} key={ingredient._id} className={`${styles.feedDetails__ingredient}`} >
                                         <div className={styles.feedDetails_description}>
-                                            <IconFeed image={ingredient!.image} name={ingredient!.name} key={key()}/>
+                                            <IconFeed image={ingredient!.image} name={ingredient!.name} key={ingredient._id}/>
                                             <p className="ml-4 text text_type_main-default">{ingredient!.name}</p>
                                         </div>
                                         <div className={styles.feedDetails_description}>
